@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Medicon</string>
+    <string name="register"><u>REGISTER</u></string>
 </resources>

@@ -1,42 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@mipmap/login_signup_bg"
-    tools:context=".Login">
+    tools:context=".Signup">
 
     <ImageView
         android:id="@+id/banner"
-        android:src="@mipmap/medicon_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"/>
+        android:layout_marginTop="50dp"
+        android:src="@mipmap/medicon_txt" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/login_card"
         app:cardCornerRadius="10dp"
-        android:elevation="5dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_below="@id/banner"
         android:layout_width="match_parent"
-        android:layout_height="400dp">
-
+        android:layout_height="480dp"
+        android:layout_below="@id/banner"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="25dp"
+        android:elevation="5dp">
         <LinearLayout
             android:gravity="center_horizontal"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
             <ImageView
                 android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/login_txt"/>
+                android:src="@mipmap/signup_txt"/>
 
             <EditText
                 android:hint="Username"
@@ -49,7 +47,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <EditText
+                android:hint="Email"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:inputType="textPassword"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="60dp"
+                android:paddingBottom="5dp"
+                android:background="@mipmap/edt_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <EditText
                 android:hint="Password"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:inputType="textPassword"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="60dp"
+                android:paddingBottom="5dp"
+                android:background="@mipmap/edt_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:hint="Confirm Password"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
                 android:inputType="textPassword"
@@ -64,19 +85,8 @@
                 android:background="@mipmap/login_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-
-            <TextView
-                android:textStyle="bold"
-                android:layout_marginTop="20dp"
-                android:text="Forgot Password?"
-                android:textSize="18dp"
-                android:textColor="@color/colorPrimary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
     <LinearLayout
         android:layout_marginTop="15dp"
         android:layout_centerHorizontal="true"
@@ -88,7 +98,7 @@
 
         <TextView
             android:textSize="18dp"
-            android:text="Don't have an account?"
+            android:text="Already a user ?"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
@@ -96,12 +106,11 @@
             android:textColor="@color/colorPrimary"
             android:layout_marginTop="10dp"
             android:textSize="18dp"
-            android:text="@string/register"
+            android:text="@string/login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
     </LinearLayout>
-
 
 
 </RelativeLayout>

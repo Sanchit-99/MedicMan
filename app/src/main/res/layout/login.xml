@@ -39,40 +39,47 @@
                 android:src="@mipmap/login_txt"/>
 
             <EditText
-                android:hint="Username"
+                android:id="@+id/et_email_login"
+                android:hint="Email"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="20dp"
-                android:paddingLeft="60dp"
+                android:paddingStart="60dp"
+                android:inputType="textEmailAddress"
                 android:paddingBottom="5dp"
                 android:background="@mipmap/edt_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <EditText
+                android:id="@+id/et_pass_login"
                 android:hint="Password"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
                 android:inputType="textPassword"
                 android:layout_marginTop="10dp"
-                android:paddingLeft="60dp"
+                android:paddingStart="60dp"
                 android:paddingBottom="5dp"
                 android:background="@mipmap/edt_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <Button
+                android:id="@+id/btn_login_login"
                 android:layout_marginTop="20dp"
                 android:background="@mipmap/login_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:onClick="login"/>
 
             <TextView
-                android:textStyle="bold"
-                android:layout_marginTop="20dp"
-                android:text="Forgot Password?"
-                android:textSize="18dp"
-                android:textColor="@color/colorPrimary"
+                android:id="@+id/tv_FGpass_login"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:onClick="forgotPass"
+                android:text="@string/fgpass"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18dp"
+                android:textStyle="bold" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -91,14 +98,17 @@
             android:text="Don't have an account?"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
         <TextView
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
-            android:layout_marginTop="10dp"
-            android:textSize="18dp"
-            android:text="@string/register"
+            android:id="@+id/tv_register_login"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="startSignup"
+            android:text="@string/register"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

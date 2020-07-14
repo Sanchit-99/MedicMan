@@ -11,15 +11,18 @@
         android:theme="@style/AppTheme">
         <activity android:name="com.example.medicman.setup"></activity>
         <activity android:name="com.example.medicman.Home">
+
+        </activity>
+        <activity android:name="com.example.medicman.Signup" />
+        <activity android:name="com.example.medicman.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.medicman.Signup" />
-        <activity android:name="com.example.medicman.Login"></activity>
         <activity android:name="com.example.medicman.MainActivity" />
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

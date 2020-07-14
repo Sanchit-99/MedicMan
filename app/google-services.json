@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "681972974265",
+    "firebase_url": "https://medicman-8ca63.firebaseio.com",
+    "project_id": "medicman-8ca63",
+    "storage_bucket": "medicman-8ca63.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:681972974265:android:535bfad83eda8054159168",
+        "android_client_info": {
+          "package_name": "com.example.medicman"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "681972974265-icgpr00nc7vn3egci8au4ehfiipmtg8s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.medicman",
+            "certificate_hash": "d7ae58f31b631f2218acfc419eb6d79c3c8e817f"
+          }
+        },
+        {
+          "client_id": "681972974265-bipq42va9l4e201i62q2dpv0fvko50ri.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBibkheWkl9PG6Oakm9-RUCiSe4p3acrAs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "681972974265-bipq42va9l4e201i62q2dpv0fvko50ri.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

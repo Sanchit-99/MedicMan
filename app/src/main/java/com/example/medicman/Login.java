@@ -1,17 +1,15 @@
 package com.example.medicman;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.medicman.R;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -33,7 +31,7 @@ public class Login extends AppCompatActivity {
         init();
     }
 
-    private void init(){
+    private void init() {
         mAuth = FirebaseAuth.getInstance();
         etEmail = findViewById(R.id.et_email_login);
         etPass = findViewById(R.id.et_pass_login);
@@ -41,31 +39,29 @@ public class Login extends AppCompatActivity {
     }
 
     public void login(final View view) {
-        String memail,mpass;
+        String memail = etEmail.getText().toString().trim();
+        String mpass = etPass.getText().toString();
 
-        memail=etEmail.getText().toString();
-        mpass=etPass.getText().toString();
-
-        if (!memail.equals("") && !mpass.equals("")){
+        if (!memail.equals("") && !mpass.equals("")) {
 
             btnLogin.setVisibility(view.INVISIBLE);
 
-            mAuth.signInWithEmailAndPassword(memail,mpass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            mAuth.signInWithEmailAndPassword(memail, mpass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()){
-                        Intent i = new Intent(getApplicationContext(),Home.class);
-                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                    if (task.isSuccessful()) {
+                        Intent i = new Intent(getApplicationContext(), Home.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         finish();
                         startActivity(i);
-                    }else {
-                        String error=task.getException().getMessage();
+                    } else {
+                        String error = task.getException().getMessage();
                         Toast.makeText(Login.this, "Error:" + error, Toast.LENGTH_SHORT).show();
                     }
                     btnLogin.setVisibility(view.VISIBLE);
                 }
             });
-        }else {
+        } else {
             Toast.makeText(this, "Please fill the fields", Toast.LENGTH_SHORT).show();
         }
     }
@@ -73,8 +69,8 @@ public class Login extends AppCompatActivity {
     public void forgotPass(View view) {
         String email;
 
-        email=etEmail.getText().toString();
-        if (!email.equals("")){
+        email = etEmail.getText().toString();
+        if (!email.equals("")) {
             mAuth.sendPasswordResetEmail(email)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -89,8 +85,7 @@ public class Login extends AppCompatActivity {
                     Toast.makeText(Login.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
-        }
-        else {
+        } else {
             Toast.makeText(this, "Please Provide your registered Email Address", Toast.LENGTH_SHORT).show();
         }
 

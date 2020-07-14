@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".setup">
+    tools:context=".Setup">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/setup_profile_img"

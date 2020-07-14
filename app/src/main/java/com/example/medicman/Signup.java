@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.example.medicman.R;
+
 public class Signup extends AppCompatActivity {
 
     @Override

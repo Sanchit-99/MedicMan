@@ -1,4 +1,4 @@
-package com.example.medicon;
+package com.example.medicman;
 
 import android.content.Context;
 

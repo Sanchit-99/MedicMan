@@ -3,4 +3,5 @@
     <string name="register"><u>REGISTER</u></string>
     <string name="login"><u>LOGIN</u></string>
     <string name="fgpass"><u>Forgot Password?</u></string>
+    <string name="tag_line">Never Forget Medicine</string>
 </resources>

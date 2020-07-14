@@ -10,11 +10,11 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/setup_profile_img"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
         android:src="@mipmap/setup_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_width="150dp"
+        android:layout_height="150dp"/>
 
     <LinearLayout
         android:layout_marginLeft="20dp"
@@ -26,6 +26,133 @@
         android:layout_height="wrap_content">
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:textSize="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email : "/>
+            <Space
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:textSize="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="abc@gmail.com "/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:textSize="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Username : "/>
+            <Space
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+           <EditText
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:inputType="text"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:textSize="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date of Birth : "/>
+            <Space
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+
+            <EditText
+                android:maxLength="10"
+                android:id="@+id/editTextDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="date" />
+
+        </LinearLayout>
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:textSize="18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gender : "/>
+        <Space
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+        <RadioGroup
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:text="Female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <RadioButton
+                android:text="Male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </RadioGroup>
+
+
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:textSize="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Medicine Provider : "/>
+            <Space
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+           <EditText
+               android:hint="Contact No"
+               android:maxLength="10"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:inputType="number"/>
+
+
+        </LinearLayout>
     </LinearLayout>
 
 
@@ -49,5 +176,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>
+
+
 
 </RelativeLayout>

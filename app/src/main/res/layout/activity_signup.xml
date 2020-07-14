@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:src="@mipmap/medicon_txt" />
+        android:src="@mipmap/medicman_txt" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/login_card"

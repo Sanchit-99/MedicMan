@@ -1,8 +1,10 @@
-package com.example.medicon;
+package com.example.medicman;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.medicman.R;
 
 public class Login extends AppCompatActivity {
 

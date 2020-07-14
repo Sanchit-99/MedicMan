@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@mipmap/login_signup_bg"
-    tools:context=".Signup">
+    tools:context="com.example.medicman.Signup">
 
     <ImageView
         android:id="@+id/banner"

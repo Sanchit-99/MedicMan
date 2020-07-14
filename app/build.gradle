@@ -4,7 +4,7 @@ android {
     compileSdkVersion 29
 
     defaultConfig {
-        applicationId "com.example.medicon"
+        applicationId "com.example.medicman"
         minSdkVersion 19
         targetSdkVersion 29
         versionCode 1

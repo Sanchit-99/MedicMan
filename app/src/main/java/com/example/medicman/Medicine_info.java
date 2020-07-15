@@ -37,7 +37,7 @@ public class Medicine_info extends AppCompatActivity {
                         finish();
                         overridePendingTransition(0,0);
                         break;
-                    case R.id.profile:
+                    case R.id.mprofile:
                         i =new Intent(getApplicationContext(),Profile.class);
                         startActivity(i);
                         finish();

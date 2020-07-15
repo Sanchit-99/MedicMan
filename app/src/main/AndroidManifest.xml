@@ -13,7 +13,11 @@
         <activity android:name="com.example.medicman.Add_medication"/>
         <activity android:name="com.example.medicman.History"/>
         <activity android:name="com.example.medicman.Medicine_info"/>
-        <activity android:name="com.example.medicman.Profile"/>
+        <activity android:name="com.example.medicman.Profile">
+
+
+
+        </activity>
         <activity android:name="com.example.medicman.Home"/>
         <activity android:name="com.example.medicman.Signup"/>
         <activity android:name="com.example.medicman.Splash">

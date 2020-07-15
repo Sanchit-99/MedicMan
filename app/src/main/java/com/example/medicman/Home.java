@@ -1,9 +1,11 @@
 package com.example.medicman;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -27,6 +29,33 @@ public class Home extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(),Add_medication.class);
                 startActivity(i);
+            }
+        });
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent i;
+                switch (item.getItemId()){
+                    case R.id.history:
+                        i =new Intent(getApplicationContext(),History.class);
+                        startActivity(i);
+                        finish();
+                        overridePendingTransition(0,0);
+                        break;
+                    case R.id.mprofile:
+                        i =new Intent(getApplicationContext(),Profile.class);
+                        startActivity(i);
+                        finish();
+                        overridePendingTransition(0,0);
+                        break;
+                    case R.id.info:
+                        i =new Intent(getApplicationContext(),Medicine_info.class);
+                        startActivity(i);
+                        finish();
+                        overridePendingTransition(0,0);
+                        break;
+                }
+                return false;
             }
         });
 

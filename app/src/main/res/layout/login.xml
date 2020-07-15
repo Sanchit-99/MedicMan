@@ -20,8 +20,8 @@
         app:cardCornerRadius="10dp"
         android:elevation="5dp"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
+        android:layout_marginLeft="23dp"
+        android:layout_marginRight="23dp"
         android:layout_below="@id/banner"
         android:layout_width="match_parent"
         android:layout_height="400dp">
@@ -41,10 +41,11 @@
             <EditText
                 android:id="@+id/et_email_login"
                 android:hint="Email"
+                android:paddingRight="15dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="20dp"
-                android:paddingStart="60dp"
+                android:paddingStart="50dp"
                 android:inputType="textEmailAddress"
                 android:paddingBottom="5dp"
                 android:background="@mipmap/edt_username"
@@ -52,13 +53,14 @@
                 android:layout_height="wrap_content"/>
 
             <EditText
+                android:paddingRight="15dp"
                 android:id="@+id/et_pass_login"
                 android:hint="Password"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
                 android:inputType="textPassword"
                 android:layout_marginTop="10dp"
-                android:paddingStart="60dp"
+                android:paddingStart="50dp"
                 android:paddingBottom="5dp"
                 android:background="@mipmap/edt_password"
                 android:layout_width="wrap_content"
@@ -86,9 +88,9 @@
     </androidx.cardview.widget.CardView>
 
     <LinearLayout
-        android:layout_marginTop="15dp"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/login_card"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:layout_width="wrap_content"

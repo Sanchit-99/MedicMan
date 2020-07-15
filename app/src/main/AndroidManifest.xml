@@ -4,27 +4,31 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/logo"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Splash">
+        <activity android:name="com.example.medicman.Setup"/>
+        <activity android:name="com.example.medicman.Add_medication"/>
+        <activity android:name="com.example.medicman.History"/>
+        <activity android:name="com.example.medicman.Medicine_info"/>
+        <activity android:name="com.example.medicman.Profile"/>
+        <activity android:name="com.example.medicman.Home"/>
+        <activity android:name="com.example.medicman.Signup"/>
+        <activity android:name="com.example.medicman.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Setup"></activity>
-        <activity android:name=".Home"></activity>
-        <activity android:name=".Signup" />
-        <activity android:name=".Login">
+
+        <activity android:name="com.example.medicman.Login">
 
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name="com.example.medicman.MainActivity" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
-
 </manifest>

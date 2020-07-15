@@ -1,0 +1,51 @@
+package com.example.medicman;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+public class Medicine_info extends AppCompatActivity {
+    BottomNavigationView bottomNavigationView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.medicine_info);
+
+        bottomNavigationView=findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.info);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent i;
+                switch (item.getItemId()){
+                    case R.id.home:
+                        i=new Intent(getApplicationContext(),Home.class);
+                        startActivity(i);
+                        finish();
+                        overridePendingTransition(0,0);
+                        break;
+                    case R.id.history:
+                        i =new Intent(getApplicationContext(),History.class);
+                        startActivity(i);
+                        finish();
+                        overridePendingTransition(0,0);
+                        break;
+                    case R.id.profile:
+                        i =new Intent(getApplicationContext(),Profile.class);
+                        startActivity(i);
+                        finish();
+                        overridePendingTransition(0,0);
+                        break;
+                }
+                return false;
+            }
+        });
+    }
+}

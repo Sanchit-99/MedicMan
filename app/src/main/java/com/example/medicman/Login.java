@@ -56,7 +56,7 @@ public class Login extends AppCompatActivity {
                         startActivity(i);
                     } else {
                         String error = task.getException().getMessage();
-                        Toast.makeText(Login.this, "Error:" + error, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Login.this, "Error: User not found" , Toast.LENGTH_SHORT).show();
                     }
                     btnLogin.setVisibility(view.VISIBLE);
                 }

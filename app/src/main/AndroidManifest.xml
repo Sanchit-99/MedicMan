@@ -14,15 +14,16 @@
         <activity android:name="com.example.medicman.History"/>
         <activity android:name="com.example.medicman.Medicine_info"/>
         <activity android:name="com.example.medicman.Profile">
-        </activity>
-        <activity android:name="com.example.medicman.Home"/>
-        <activity android:name="com.example.medicman.Signup"/>
-        <activity android:name="com.example.medicman.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name="com.example.medicman.Home"/>
+        <activity android:name="com.example.medicman.Signup"/>
+        <activity android:name="com.example.medicman.Splash">
+
         </activity>
         <activity android:name="com.example.medicman.Login">
         </activity>

@@ -1,32 +1,220 @@
 package com.example.medicman;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.app.TimePickerDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.text.format.DateFormat;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.theartofdev.edmodo.cropper.CropImage;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Objects;
+
+import static com.example.medicman.Home.MedicinArray;
 
 public class Add_medication extends AppCompatActivity {
 
+    StorageReference storageRef;
+    FirebaseStorage storage;
+    TextView dosage_txt,time_txt;
+    ImageView imageView;
     Toolbar tb;
+    EditText medicineName;
+    float dosage;
+    int  mHour, mMinute;
+    String time;
+    Uri uri,DownloadUri;
+    Bitmap b;
+    private static final int RESULT_LOAD_IMAGE_CAMERA = 2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_medication);
-
+        medicineName=findViewById(R.id.med_name);
+        uri=null;
+        DownloadUri=null;
+        dosage=(float)0;
+        dosage_txt=findViewById(R.id.dosage_txt);
+        time_txt=findViewById(R.id.alarm_time_txt);
+        imageView=findViewById(R.id.img_view);
         tb=findViewById(R.id.tlbr);
         setSupportActionBar(tb);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Add Medication");
         tb.setTitleTextColor(Color.WHITE);
-
-
-
     }
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
     }
+
+    public void addEntry(View view) {
+        if(time==null || dosage==0.0 || medicineName.getText().toString().equals("") ){
+            Toast.makeText(this, "Please fill all the details", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        UploadImageToFirebase();
+
+
+    }
+
+    private void UploadDataToFirebase() {
+        MedicineInfo info = new MedicineInfo();
+        info.setName(medicineName.getText().toString());
+        info.setTime("Time : "+time);
+        info.setDosage("Dosage : "+dosage+" Pills");
+        info.setImage_url(""+DownloadUri);
+        MedicinArray.add(info);
+        FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("MedicineInfo").setValue(MedicinArray);
+    }
+
+    private void UploadImageToFirebase() {
+
+        if (uri!=null) {
+
+            storageRef = FirebaseStorage.getInstance().getReference();
+            final StorageReference storageReference = storageRef.child("UserMedicineImages/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/medicine_" + MedicinArray.size() + ".jpg");
+            UploadTask uploadTask = storageReference.putFile(uri);
+
+            Task<Uri> urlTask;
+            urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw Objects.requireNonNull(task.getException());
+                    }
+                    return storageReference.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        DownloadUri = task.getResult();
+                        UploadDataToFirebase();
+                        Toast.makeText(Add_medication.this, "Data saved successfully", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(Add_medication.this, "ERROR:" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+//                btnSave.setVisibility(View.VISIBLE);
+                }
+            });
+        }else {
+            Toast.makeText(this, "Please upload image of MEDICINE", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    public void SubtractDosage(View view) {
+        if(dosage==0.0){
+            return;
+        }
+        dosage-=0.5;
+        dosage_txt.setText(""+dosage);
+    }
+
+    public void addDosage(View view) {
+        dosage+=0.5;
+        dosage_txt.setText(""+dosage);
+    }
+
+    public void setTime(View view) {
+        Calendar c = Calendar.getInstance();
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
+
+        // Launch Time Picker Dialog
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+                new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay,
+                                          int minute) {
+                        Calendar selected_time = Calendar.getInstance();
+                        selected_time.set(Calendar.HOUR_OF_DAY,hourOfDay);
+                        selected_time.set(Calendar.MINUTE,minute);
+                        selected_time.set(Calendar.SECOND,0);
+                        String delegate = "hh:mm aaa";
+                        time=""+ DateFormat.format(delegate,selected_time.getTime());
+                        time_txt.setText(time);
+                    }
+                }, mHour, mMinute, false);
+        timePickerDialog.show();
+    }
+
+    public void add_image(View view) {
+         camera();
+    }
+
+    public void camera(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.CAMERA},
+                        RESULT_LOAD_IMAGE_CAMERA);
+            } else {
+                Intent i =new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(i,RESULT_LOAD_IMAGE_CAMERA);
+            }
+        } else {
+            Intent i =new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(i,RESULT_LOAD_IMAGE_CAMERA);
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case RESULT_LOAD_IMAGE_CAMERA: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                    camera();
+            }
+            break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+         if(requestCode == RESULT_LOAD_IMAGE_CAMERA){
+                uri=data.getData();
+                Toast.makeText(this, ""+uri, Toast.LENGTH_SHORT).show();
+                b= (Bitmap) data.getExtras().get("data");
+                imageView.setBackground(new BitmapDrawable(getResources(), b));
+        }
+    }
+
 }

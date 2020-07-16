@@ -8,8 +8,10 @@ public class UserInfo {
     String providerPhNo;
     String dob;
 
-    public UserInfo(String email, String userName, String gender, String profileUrl, String providerPhNo, String dob) {
+
+    public UserInfo(String email, String userName, String gender, String profileUrl, String providerPhNo, String dob,int totalMedicines) {
         this.email = email;
+
         this.userName = userName;
         this.gender = gender;
         this.profileUrl = profileUrl;

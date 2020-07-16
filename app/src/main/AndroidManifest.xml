@@ -9,25 +9,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.medicman.Setup"/>
-        <activity android:name="com.example.medicman.Add_medication"/>
-        <activity android:name="com.example.medicman.History"/>
-        <activity android:name="com.example.medicman.Medicine_info"/>
-        <activity android:name="com.example.medicman.Profile"/>
-        <activity android:name="com.example.medicman.Home"/>
-        <activity android:name="com.example.medicman.Signup"/>
-        <activity android:name="com.example.medicman.Splash">
+        <activity android:name=".Setup" />
+        <activity android:name=".Add_medication" />
+        <activity android:name=".History" />
+        <activity android:name=".Medicine_info" />
+        <activity android:name=".Profile" />
+        <activity android:name=".Home" />
+        <activity android:name=".Signup" />
+        <activity android:name=".Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.medicman.Login">
-        </activity>
-        <activity android:name="com.example.medicman.MainActivity" />
+        <activity android:name=".Login"></activity>
+        <activity android:name=".MainActivity" />
     </application>
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
 </manifest>

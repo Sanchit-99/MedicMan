@@ -252,12 +252,7 @@ public class Setup extends AppCompatActivity {
         userInfo.setUserName(etUserName.getText().toString());
         userInfo.setProviderPhNo(providerPhNo.getText().toString());
         userInfo.setDob(tvDOB.getText().toString());
-        /*DatabaseReference databaseReference = database.getReferenceFromUrl("https://medicman-8ca63.firebaseio.com");
-        DatabaseReference databaseReference = database.getReferenceFromUrl("gs://medicman-8ca63.appspot.com");
-        DatabaseReference childRef = databaseReference.child("UserInfo");
-        childRef.child(firebaseUser.getUid())
-                .setValue(userInfo);*/
-        FirebaseDatabase.getInstance().getReference().child("UserInfo").child(firebaseUser.getUid()).setValue(userInfo);
+        FirebaseDatabase.getInstance().getReference().child("User").child(firebaseUser.getUid()).setValue(userInfo);
     }
 
     public void skipSetup(View view) {

@@ -6,33 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".Home">
 
-    <ScrollView
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_above="@id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="10000dp">
-
-        <LinearLayout
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-           <ImageView
-               android:layout_marginRight="10dp"
-               android:layout_marginLeft="10dp"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-             android:src="@mipmap/demo_card"/>
-          <ImageView
-              android:layout_marginRight="10dp"
-              android:layout_marginLeft="10dp"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:src="@mipmap/demo_card"/>
-        </LinearLayout>
-
-    </ScrollView>
-
+    </androidx.recyclerview.widget.RecyclerView>
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

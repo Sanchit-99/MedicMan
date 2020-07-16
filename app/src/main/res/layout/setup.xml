@@ -81,8 +81,8 @@
             android:onClick="openDatePicker"
             app:layout_constraintBottom_toBottomOf="@+id/textView5"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toTopOf="@+id/textView5" />
-        <!--android:src="@drawable/ic_calendar"-->
+            app:layout_constraintTop_toTopOf="@+id/textView5"
+        android:src="@drawable/ic_calendar"/>
 
 
         <RadioGroup

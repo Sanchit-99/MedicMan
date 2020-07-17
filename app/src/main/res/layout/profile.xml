@@ -8,10 +8,11 @@
     tools:context="com.example.medicman.Profile">
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_marginTop="20dp"
         android:id="@+id/profile_pic"
         android:layout_centerHorizontal="true"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
         android:src="@mipmap/setup_profile"/>
     <TextView
         android:onClick="changePhoto"

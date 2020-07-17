@@ -108,7 +108,7 @@ public class Add_medication extends AppCompatActivity {
         if (uri!=null) {
 
             storageRef = FirebaseStorage.getInstance().getReference();
-            final StorageReference storageReference = storageRef.child("UserMedicineImages/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/medicine_" + MedicinArray.size() + ".jpg");
+            final StorageReference storageReference = storageRef.child("Images/" + FirebaseAuth.getInstance().getCurrentUser().getUid() +"/medicine_" + MedicinArray.size() + ".jpg");
             UploadTask uploadTask = storageReference.putFile(uri);
 
             Task<Uri> urlTask;

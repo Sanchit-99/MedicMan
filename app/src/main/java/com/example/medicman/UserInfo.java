@@ -4,14 +4,14 @@ public class UserInfo {
     String email;
     String userName;
     String gender;
-    String profileUrl = "";
+    String profileUrl;
     String providerPhNo;
     String dob;
 
-
-    public UserInfo(String email, String userName, String gender, String profileUrl, String providerPhNo, String dob,int totalMedicines) {
+    public UserInfo() {
+    }
+    public UserInfo(String email, String userName, String gender, String profileUrl, String providerPhNo, String dob) {
         this.email = email;
-
         this.userName = userName;
         this.gender = gender;
         this.profileUrl = profileUrl;
@@ -19,8 +19,7 @@ public class UserInfo {
         this.dob = dob;
     }
 
-    public UserInfo() {
-    }
+
 
     public void setEmail(String email) {
         this.email = email;

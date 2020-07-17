@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+
 public class Home extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     FloatingActionButton floatingActionButton;
@@ -35,90 +36,98 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.home);
         mAuth=FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
-
         if (user == null){
-            Intent intent = new Intent(getApplicationContext(),Login.class);
+            Intent intent = new Intent(Home.this,Login.class);
             startActivity(intent);
             finish();
-        }
-        setContentView(R.layout.home);
+        }else {
+            MedicinArray = new ArrayList<>();
 
-        MedicinArray=new ArrayList<>();
+            bottomNavigationView = findViewById(R.id.bottom_navigation);
+            bottomNavigationView.setSelectedItemId(R.id.home);
+            floatingActionButton = findViewById(R.id.add_medicine);
+            recyclerView = findViewById(R.id.recycler_view);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.home);
-        floatingActionButton = findViewById(R.id.add_medicine);
-        recyclerView=findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            FirebaseRecyclerOptions<MedicineInfo> options =
+                    new FirebaseRecyclerOptions.Builder<MedicineInfo>()
+                            .setQuery(FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("MedicineInfo"), MedicineInfo.class)
+                            .build();
 
-        FirebaseRecyclerOptions<MedicineInfo> options =
-                new FirebaseRecyclerOptions.Builder<MedicineInfo>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("User").child(user.getUid()).child("MedicineInfo"), MedicineInfo.class)
-                        .build();
+            adapter = new MedicineAdapter(options);
+            recyclerView.setAdapter(adapter);
 
-        adapter=new MedicineAdapter(options);
-        recyclerView.setAdapter(adapter);
-
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("User/dy9O2TsIVNSx13dFb7lwz5C7XDW2/MedicineInfo");
+            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference ref = database.getReference("User/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/MedicineInfo");
 
 // Attach a listener to read the data at our posts reference
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    MedicineInfo user = postSnapshot.getValue(MedicineInfo.class);
-                    MedicinArray.add(user);
-                    Log.d("Home : ",MedicinArray.toString());
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        MedicineInfo user = postSnapshot.getValue(MedicineInfo.class);
+                        MedicinArray.add(user);
+                        Log.d("Home : ", MedicinArray.toString());
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
-
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), Add_medication.class);
-                startActivity(i);
-            }
-        });
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Intent i;
-                switch (item.getItemId()) {
-                    case R.id.history:
-                        i = new Intent(getApplicationContext(), History.class);
-                        startActivity(i);
-                        finish();
-                        overridePendingTransition(0, 0);
-                        break;
-                    case R.id.mprofile:
-                        i = new Intent(getApplicationContext(), Profile.class);
-                        startActivity(i);
-                        finish();
-                        overridePendingTransition(0, 0);
-                        break;
-                    case R.id.info:
-                        i = new Intent(getApplicationContext(), Medicine_info.class);
-                        startActivity(i);
-                        finish();
-                        overridePendingTransition(0, 0);
-                        break;
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    System.out.println("The read failed: " + databaseError.getCode());
                 }
-                return false;
-            }
-        });
+            });
+
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(getApplicationContext(), Add_medication.class);
+                    startActivity(i);
+                }
+            });
+            bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    Intent i;
+                    switch (item.getItemId()) {
+                        case R.id.history:
+                            i = new Intent(getApplicationContext(), History.class);
+                            startActivity(i);
+                            finish();
+                            overridePendingTransition(0, 0);
+                            break;
+                        case R.id.mprofile:
+                            i = new Intent(getApplicationContext(), Profile.class);
+                            startActivity(i);
+                            finish();
+                            overridePendingTransition(0, 0);
+                            break;
+                        case R.id.info:
+                            i = new Intent(getApplicationContext(), Medicine_info.class);
+                            startActivity(i);
+                            finish();
+                            overridePendingTransition(0, 0);
+                            break;
+                    }
+                    return false;
+                }
+            });
+        }
     }
+
+
     @Override
     protected void onStart() {
         super.onStart();
+        FirebaseUser user=mAuth.getCurrentUser();
+        if(user!=null){
+
+        }else{
+            startActivity(new Intent(Home.this,Login.class));
+            finish();
+        }
         adapter.startListening();
     }
     @Override
@@ -133,7 +142,7 @@ public class Home extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
 
         if (user == null){
-            Intent intent = new Intent(getApplicationContext(),Login.class);
+            Intent intent = new Intent(Home.this,Login.class);
             startActivity(intent);
             finish();
         }

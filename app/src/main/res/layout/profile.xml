@@ -14,6 +14,7 @@
         android:layout_height="150dp"
         android:src="@mipmap/setup_profile"/>
     <TextView
+        android:onClick="changePhoto"
         android:textColor="@color/colorPrimary"
         android:id="@+id/change_pic"
         android:textSize="18dp"
@@ -38,19 +39,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
+            android:id="@+id/user_email_firebase"
             android:textSize="18dp"
-            android:text="dummyemail@gmail.com"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
+            android:text="Date of Birth"
             android:layout_marginTop="10dp"
             android:textSize="15dp"
-            android:text="Date of Birth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
+            android:id="@+id/user_dob_firebase"
             android:textSize="18dp"
-            android:text="01/05/1999"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
@@ -61,8 +62,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <EditText
+            android:id="@+id/username_firebase"
             android:paddingTop="0dp"
-            android:text="sanchit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <TextView
@@ -73,9 +74,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <EditText
+            android:maxLength="10"
+            android:id="@+id/medicine_provider_firebase"
             android:paddingTop="0dp"
             android:inputType="number"
-            android:text="7845956321"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -102,6 +104,7 @@
             android:layout_height="35dp">
 
             <TextView
+                android:onClick="update"
                 android:textSize="15dp"
                 android:text="Update Profile"
                 android:textColor="@android:color/white"

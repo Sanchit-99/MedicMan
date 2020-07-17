@@ -40,6 +40,8 @@ import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.example.medicman.Initialization.userInfoFromFirebase;
+
 public class Setup extends AppCompatActivity {
     private static final int RESULT_LOAD_IMAGE = 1;
     public static final String DEFAULT_USER = "Default User";
@@ -206,7 +208,7 @@ public class Setup extends AppCompatActivity {
             imageUri = DEFAULT_PROFILE_URI;
             btnSave.setVisibility(View.INVISIBLE);
             storageRef = storage.getReferenceFromUrl("gs://medicman-8ca63.appspot.com");
-            final StorageReference storageReference = storageRef.child("UserProfileImages/" + firebaseUser.getUid() + "/profile.jpg");
+            final StorageReference storageReference = storageRef.child("Images/" + firebaseUser.getUid() + "/profile.jpg");
             UploadTask uploadTask = storageReference.putFile(imageUri);
 
             Task<Uri> urlTask;
@@ -235,7 +237,6 @@ public class Setup extends AppCompatActivity {
                     btnSave.setVisibility(View.VISIBLE);
                 }
             });
-//        }
     }
 
     private void storeToDb() {
@@ -244,15 +245,15 @@ public class Setup extends AppCompatActivity {
             etUserName.setText(DEFAULT_USER);
         if (providerPhNo.getText().toString().equals(""))
             providerPhNo.setText(DEFAULT_PH_NO);
-
         UserInfo userInfo = new UserInfo();
         userInfo.setEmail(tvEmail.getText().toString());
         userInfo.setGender(selectedGender);
-        userInfo.setProfileUrl(downloadUrl == null ? "" : downloadUrl.toString());
+        userInfo.setProfileUrl(downloadUrl == null ? DEFAULT_PROFILE_URI.toString() : downloadUrl.toString());
         userInfo.setUserName(etUserName.getText().toString());
         userInfo.setProviderPhNo(providerPhNo.getText().toString());
         userInfo.setDob(tvDOB.getText().toString());
-        FirebaseDatabase.getInstance().getReference().child("User").child(firebaseUser.getUid()).setValue(userInfo);
+        FirebaseDatabase.getInstance().getReference().child("User").child(firebaseUser.getUid()).child("UserInfo").setValue(userInfo);
+        userInfoFromFirebase=userInfo;
     }
 
     public void skipSetup(View view) {

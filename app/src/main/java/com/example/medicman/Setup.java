@@ -42,6 +42,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Setup extends AppCompatActivity {
     private static final int RESULT_LOAD_IMAGE = 1;
+    public static final String DEFAULT_USER = "Default User";
+    public static final String DEFAULT_PH_NO = "0000000000";
+    public static final Uri DEFAULT_PROFILE_URI = Uri.parse("android.resource://com.example.medicman/mipmap/"+R.mipmap.setup_profile);
     FirebaseAuth mAuth;
     FirebaseDatabase database;
     FirebaseStorage storage;
@@ -138,17 +141,6 @@ public class Setup extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    /*private void getImage() {
-        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, RESULT_LOAD_IMAGE);
-        } else {
-            Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-            i.setType("image/*");
-            startActivityForResult(i, RESULT_LOAD_IMAGE);
-        }
-    }*/
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
@@ -191,11 +183,13 @@ public class Setup extends AppCompatActivity {
 
     public void saveDetailsToDB(View view) {
         if (etUserName.getText().toString().equals(""))
-            Toast.makeText(this, "Empty User name", Toast.LENGTH_SHORT).show();
+            etUserName.setText(DEFAULT_USER);
         if (providerPhNo.getText().toString().equals(""))
-            Toast.makeText(this, "Invalid Phone number", Toast.LENGTH_SHORT).show();
+            providerPhNo.setText(DEFAULT_PH_NO);
 
-        if (imageUri != null) {
+        if(imageUri==null)
+            imageUri = DEFAULT_PROFILE_URI;
+//        if (imageUri != null) {
             btnSave.setVisibility(View.INVISIBLE);
             storageRef = storage.getReferenceFromUrl("gs://medicman-8ca63.appspot.com");
             final StorageReference storageReference = storageRef.child("UserProfileImages/" + firebaseUser.getUid() + "/profile.jpg");
@@ -227,7 +221,7 @@ public class Setup extends AppCompatActivity {
                     btnSave.setVisibility(View.VISIBLE);
                 }
             });
-        }
+//        }
     }
 
     private void storeToDb() {
@@ -237,12 +231,11 @@ public class Setup extends AppCompatActivity {
         }
         if (!clickedOnRadiobtn) {
             Toast.makeText(this, "Select Your gender", Toast.LENGTH_SHORT).show();
-            return;
         }
         if (etUserName.getText().toString() == "")
-            etUserName.setText("Default User");
+            etUserName.setText(DEFAULT_USER);
         if (providerPhNo.getText().toString() == "")
-            providerPhNo.setText("1234567890");
+            providerPhNo.setText(DEFAULT_PH_NO);
 
 
         UserInfo userInfo = new UserInfo();

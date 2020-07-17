@@ -36,14 +36,27 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tv_updatephoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/setup_profile_img"
         android:layout_centerHorizontal="true"
         android:onClick="chooseProfile"
-        android:text="change photo"
+        android:text="Update photo"
         android:textColor="@color/colorPrimary"
         android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/tv_user_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="abc@gmail.com "
+        android:textSize="18dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tv_updatephoto"
+        android:layout_marginTop="8dp"/>
+
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -79,10 +92,10 @@
             android:layout_width="32dp"
             android:layout_height="50dp"
             android:onClick="openDatePicker"
+            android:src="@drawable/ic_calendar"
             app:layout_constraintBottom_toBottomOf="@+id/textView5"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toTopOf="@+id/textView5"
-        android:src="@drawable/ic_calendar"/>
+            app:layout_constraintTop_toTopOf="@+id/textView5" />
 
 
         <RadioGroup
@@ -100,7 +113,6 @@
                 android:id="@+id/rb_male"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="true"
                 android:onClick="getGender"
                 android:text="Male"
                 app:layout_constraintBottom_toBottomOf="@+id/textView4"
@@ -120,27 +132,6 @@
         </RadioGroup>
 
         <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="Email : "
-            android:textSize="18dp"
-            app:layout_constraintBottom_toTopOf="@+id/textView3"
-            app:layout_constraintStart_toStartOf="@+id/textView3"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_user_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="abc@gmail.com "
-            android:textSize="18dp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
-            app:layout_constraintStart_toStartOf="@+id/guideline" />
-
-        <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -149,7 +140,7 @@
             android:textSize="18dp"
             app:layout_constraintBottom_toTopOf="@+id/textView4"
             app:layout_constraintStart_toStartOf="@+id/textView4"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView4"
@@ -181,8 +172,8 @@
             android:text="Medicine Provider : "
             android:textSize="18dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+            app:layout_constraintTop_toBottomOf="@+id/textView5"
+            tools:layout_editor_absoluteX="29dp" />
 
         <TextView
             android:id="@+id/tv_dob"

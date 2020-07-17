@@ -50,7 +50,7 @@
             android:layout_height="wrap_content">
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:layout_gravity="center_vertical"
-                android:onClick="SubtractDosage"
+                android:onClick="subtractDosage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:borderWidth="0dp"

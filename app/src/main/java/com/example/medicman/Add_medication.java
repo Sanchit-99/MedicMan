@@ -3,11 +3,11 @@ package com.example.medicman;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -17,9 +17,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.format.DateFormat;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -35,10 +36,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.theartofdev.edmodo.cropper.CropImage;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
 
@@ -55,7 +55,7 @@ public class Add_medication extends AppCompatActivity {
     float dosage;
     int  mHour, mMinute;
     String time;
-    Uri uri,DownloadUri;
+    Uri uri, downloadUri;
     Bitmap b;
     private static final int RESULT_LOAD_IMAGE_CAMERA = 2;
     @Override
@@ -64,7 +64,7 @@ public class Add_medication extends AppCompatActivity {
         setContentView(R.layout.add_medication);
         medicineName=findViewById(R.id.med_name);
         uri=null;
-        DownloadUri=null;
+        downloadUri =null;
         dosage=(float)0;
         dosage_txt=findViewById(R.id.dosage_txt);
         time_txt=findViewById(R.id.alarm_time_txt);
@@ -88,22 +88,22 @@ public class Add_medication extends AppCompatActivity {
             return;
         }
 
-        UploadImageToFirebase();
+        uploadImageToFirebase();
 
 
     }
 
-    private void UploadDataToFirebase() {
+    private void uploadDataToFirebase() {
         MedicineInfo info = new MedicineInfo();
         info.setName(medicineName.getText().toString());
         info.setTime("Time : "+time);
         info.setDosage("Dosage : "+dosage+" Pills");
-        info.setImage_url(""+DownloadUri);
+        info.setImage_url(""+ downloadUri);
         MedicinArray.add(info);
         FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("MedicineInfo").setValue(MedicinArray);
     }
 
-    private void UploadImageToFirebase() {
+    private void uploadImageToFirebase() {
 
         if (uri!=null) {
 
@@ -124,8 +124,8 @@ public class Add_medication extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
-                        DownloadUri = task.getResult();
-                        UploadDataToFirebase();
+                        downloadUri = task.getResult();
+                        uploadDataToFirebase();
                         Toast.makeText(Add_medication.this, "Data saved successfully", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(Add_medication.this, "ERROR:" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -139,7 +139,7 @@ public class Add_medication extends AppCompatActivity {
 
     }
 
-    public void SubtractDosage(View view) {
+    public void subtractDosage(View view) {
         if(dosage==0.0){
             return;
         }
@@ -187,12 +187,22 @@ public class Add_medication extends AppCompatActivity {
                         new String[]{Manifest.permission.CAMERA},
                         RESULT_LOAD_IMAGE_CAMERA);
             } else {
-                Intent i =new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(i,RESULT_LOAD_IMAGE_CAMERA);
+                ImagePicker.Companion.with(this)
+                        .cameraOnly()
+                        .crop()
+                        .compress(1024)
+                        .crop(16f, 9f)
+                        .saveDir(new File(Environment.getExternalStorageDirectory(), "MedicMan"))
+                        .start();
             }
         } else {
-            Intent i =new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(i,RESULT_LOAD_IMAGE_CAMERA);
+            ImagePicker.Companion.with(this)
+                    .cameraOnly()
+                    .crop()
+                    .compress(1024)
+                    .crop(16f, 9f)
+                    .saveDir(new File(Environment.getExternalStorageDirectory(), "MedicMan"))
+                    .start();
         }
     }
     @Override
@@ -209,11 +219,15 @@ public class Add_medication extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-         if(requestCode == RESULT_LOAD_IMAGE_CAMERA){
+         if(resultCode == Activity.RESULT_OK){
                 uri=data.getData();
                 Toast.makeText(this, ""+uri, Toast.LENGTH_SHORT).show();
-                b= (Bitmap) data.getExtras().get("data");
-                imageView.setBackground(new BitmapDrawable(getResources(), b));
+             try {
+                 b = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+             } catch (IOException e) {
+                 e.printStackTrace();
+             }
+             imageView.setBackground(new BitmapDrawable(getResources(), b));
         }
     }
 

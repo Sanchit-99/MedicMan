@@ -64,7 +64,7 @@ public class Setup extends AppCompatActivity {
     Uri downloadUrl;
     Uri imageUri;
     String selectedGender;
-    private boolean clickedOnRadiobtn;
+
 
 
     @Override
@@ -72,6 +72,21 @@ public class Setup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setup);
         init();
+
+        rgGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                switch (i){
+                    case R.id.rb_male:
+                        selectedGender="Male";
+                        break;
+                    case R.id.rb_female:
+                        selectedGender="Female";
+                        break;
+                }
+            }
+        });
+
     }
 
     private void init() {
@@ -85,7 +100,7 @@ public class Setup extends AppCompatActivity {
         btnSkip = findViewById(R.id.btn_skip);
         downloadUrl = null;
         imageUri = null;
-        selectedGender = "Male";
+        selectedGender = "";
 
         mAuth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
@@ -189,7 +204,6 @@ public class Setup extends AppCompatActivity {
 
         if(imageUri==null)
             imageUri = DEFAULT_PROFILE_URI;
-//        if (imageUri != null) {
             btnSave.setVisibility(View.INVISIBLE);
             storageRef = storage.getReferenceFromUrl("gs://medicman-8ca63.appspot.com");
             final StorageReference storageReference = storageRef.child("UserProfileImages/" + firebaseUser.getUid() + "/profile.jpg");
@@ -225,18 +239,11 @@ public class Setup extends AppCompatActivity {
     }
 
     private void storeToDb() {
-        if (tvDOB.getText().toString().equals("")) {
-            Toast.makeText(this, "Choose date of birth", Toast.LENGTH_SHORT).show();
-            openDatePicker(ivProfile.getRootView());
-        }
-        if (!clickedOnRadiobtn) {
-            Toast.makeText(this, "Select Your gender", Toast.LENGTH_SHORT).show();
-        }
-        if (etUserName.getText().toString() == "")
-            etUserName.setText(DEFAULT_USER);
-        if (providerPhNo.getText().toString() == "")
-            providerPhNo.setText(DEFAULT_PH_NO);
 
+        if (etUserName.getText().toString().equals(""))
+            etUserName.setText(DEFAULT_USER);
+        if (providerPhNo.getText().toString().equals(""))
+            providerPhNo.setText(DEFAULT_PH_NO);
 
         UserInfo userInfo = new UserInfo();
         userInfo.setEmail(tvEmail.getText().toString());
@@ -249,9 +256,21 @@ public class Setup extends AppCompatActivity {
     }
 
     public void skipSetup(View view) {
+
+        if (tvDOB.getText().toString().equals("")) {
+            Toast.makeText(this, "Choose date of birth", Toast.LENGTH_SHORT).show();
+            openDatePicker(ivProfile.getRootView());
+            return;
+        }
+        if (selectedGender.equals("")) {
+            Toast.makeText(this, "Select Your gender", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        alert.setMessage("You can set your profile later from the profile screen.")
+        alert.setMessage("You can set your profile picture and Medicine Provider " +
+                "Contact number later from the profile screen.")
                 .setTitle("NOTE")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
@@ -269,20 +288,20 @@ public class Setup extends AppCompatActivity {
             }
         }).show();
     }
-
-    public void getGender(View view) {
-        clickedOnRadiobtn = true;
-        switch (view.getId()) {
-            case R.id.rb_male: {
-                if (((RadioButton) view).isSelected())
-                    selectedGender = "Male";
-            }
-            break;
-            case R.id.rb_female: {
-                if (((RadioButton) view).isSelected())
-                    selectedGender = "Female";
-            }
-            break;
-        }
-    }
+//
+//    public void getGender(View view) {
+//        clickedOnRadiobtn = true;
+//        switch (view.getId()) {
+//            case R.id.rb_male: {
+//                if (((RadioButton) view).isSelected())
+//                    selectedGender = "Male";
+//            }
+//            break;
+//            case R.id.rb_female: {
+//                if (((RadioButton) view).isSelected())
+//                    selectedGender = "Female";
+//            }
+//            break;
+//        }
+//    }
 }

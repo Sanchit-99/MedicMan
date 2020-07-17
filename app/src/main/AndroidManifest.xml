@@ -9,7 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Setup" />
+        <activity android:name=".Setup" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".Add_medication" />
         <activity android:name=".History" />
         <activity android:name=".Medicine_info" />
@@ -17,11 +23,7 @@
         <activity android:name=".Home" />
         <activity android:name=".Signup" />
         <activity android:name=".Splash">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".Login"></activity>
         <activity android:name=".MainActivity" />

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -29,6 +30,16 @@ public class MedicineAdapter extends FirebaseRecyclerAdapter<MedicineInfo, Medic
         holder.name.setText(model.getName());
         holder.dose.setText(model.getDosage());
         holder.time.setText(model.getTime());
+
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Implement alarm cancel
+                //delete from db
+                //delete from ui
+            }
+        });
+
     }
 
     @NonNull
@@ -43,12 +54,15 @@ public class MedicineAdapter extends FirebaseRecyclerAdapter<MedicineInfo, Medic
     class MyHolder extends RecyclerView.ViewHolder  {
 
         TextView name,dose,time;
+        ImageView delete;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
             name=itemView.findViewById(R.id.medicine_name);
             dose=itemView.findViewById(R.id.medicine_dosage);
             time=itemView.findViewById(R.id.medicine_time);
+            delete=itemView.findViewById(R.id.delete);
+
 
         }
     }

@@ -8,7 +8,10 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -43,9 +46,11 @@ import java.util.Calendar;
 import java.util.Objects;
 
 import static com.example.medicman.Home.MedicinArray;
+import static com.example.medicman.Initialization.userInfoFromFirebase;
 
 public class Add_medication extends AppCompatActivity {
 
+    Calendar selected_time;
     StorageReference storageRef;
     FirebaseStorage storage;
     TextView dosage_txt,time_txt;
@@ -125,6 +130,9 @@ public class Add_medication extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
                         downloadUri = task.getResult();
+
+                        //set Notification
+                        setNotification();
                         uploadDataToFirebase();
                         Toast.makeText(Add_medication.this, "Data saved successfully", Toast.LENGTH_SHORT).show();
                     } else {
@@ -137,6 +145,27 @@ public class Add_medication extends AppCompatActivity {
             Toast.makeText(this, "Please upload image of MEDICINE", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    private void setNotification() {
+        String username=userInfoFromFirebase.userName;
+        int id = MedicinArray.size();
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlertReceiver.class);
+        intent.putExtra("medicine_name",medicineName.getText().toString());
+        intent.putExtra("image_uri",uri.toString());
+        intent.putExtra("medicine_dosage",dosage);
+        intent.putExtra("username",username);
+        intent.putExtra("id",id);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, intent, 0);
+        if (selected_time.before(Calendar.getInstance())) {
+            selected_time.add(Calendar.DATE, 1);
+        }
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, selected_time.getTimeInMillis(), pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
+                selected_time.getTimeInMillis(),
+                24*60*60*1000,
+                pendingIntent);
     }
 
     public void subtractDosage(View view) {
@@ -164,7 +193,7 @@ public class Add_medication extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
-                        Calendar selected_time = Calendar.getInstance();
+                         selected_time = Calendar.getInstance();
                         selected_time.set(Calendar.HOUR_OF_DAY,hourOfDay);
                         selected_time.set(Calendar.MINUTE,minute);
                         selected_time.set(Calendar.SECOND,0);

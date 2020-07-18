@@ -4,7 +4,7 @@
 
 
     <application
-    android:requestLegacyExternalStorage="true"
+        android:requestLegacyExternalStorage="true"
         android:name=".Initialization"
         android:allowBackup="true"
         android:icon="@mipmap/logo"
@@ -32,6 +32,12 @@
         </activity>
         <activity android:name=".Login"></activity>
         <activity android:name=".MainActivity" />
+        <receiver android:name=".AlertReceiver" >
+            <intent-filter>
+                <action android:name="android.media.action.DISPLAY_NOTIFICATION" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
     </application>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA"/>

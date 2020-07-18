@@ -102,7 +102,8 @@
             app:cardCornerRadius="15dp"
             app:cardBackgroundColor="@color/colorPrimary"
             android:layout_width="match_parent"
-            android:layout_height="35dp">
+            android:layout_height="35dp"
+            android:onClick="update">
 
             <TextView
                 android:onClick="update"
@@ -115,7 +116,6 @@
 
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
-
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
@@ -123,7 +123,8 @@
             app:cardCornerRadius="15dp"
           android:layout_marginBottom="5dp"
             android:layout_width="match_parent"
-            android:layout_height="35dp">
+            android:layout_height="35dp"
+            android:onClick="logout">
 
             <TextView
                 android:onClick="logout"

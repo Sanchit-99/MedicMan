@@ -1,16 +1,16 @@
 package com.example.medicman;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -24,7 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class Medicine_info extends AppCompatActivity {
+public class Medicine_info extends AppCompatActivity implements MedicineGuideAdapter.OnMedInfoClickListener {
     BottomNavigationView bottomNavigationView;
     RecyclerView rvMedicineInfo;
     MedicineGuideAdapter adapter;
@@ -84,7 +84,7 @@ public class Medicine_info extends AppCompatActivity {
                 .setQuery(FirebaseDatabase.getInstance().getReference("MedicineUserGuideInfo"), MedicineUserGuideInfo.class)
                 .build();
 
-        adapter = new MedicineGuideAdapter(options);
+        adapter = new MedicineGuideAdapter(options, this);
         rvMedicineInfo.setAdapter(adapter);
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("MedicineUserGuideInfo");
@@ -127,5 +127,14 @@ public class Medicine_info extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         adapter.stopListening();
+    }
+
+    @Override
+    public void onMedClick(int position) {
+        Toast.makeText(this, medicineList.get(position).getMedName() + " clicked", Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(this, MedicineDetailedInfo.class);
+        i.putExtra("MedInfo", medicineList.get(position));
+        startActivity(i);
+
     }
 }

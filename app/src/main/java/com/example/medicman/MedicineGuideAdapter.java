@@ -13,8 +13,11 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 public class MedicineGuideAdapter extends FirebaseRecyclerAdapter<MedicineUserGuideInfo, MedicineGuideAdapter.MyHolder> {
 
-    public MedicineGuideAdapter(@NonNull FirebaseRecyclerOptions<MedicineUserGuideInfo> options) {
+    OnMedInfoClickListener medClickListener;
+
+    public MedicineGuideAdapter(@NonNull FirebaseRecyclerOptions<MedicineUserGuideInfo> options, OnMedInfoClickListener listener) {
         super(options);
+        medClickListener = listener;
     }
 
     @Override
@@ -28,16 +31,28 @@ public class MedicineGuideAdapter extends FirebaseRecyclerAdapter<MedicineUserGu
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.medicine_info_item, parent, false);
 
-        return new MedicineGuideAdapter.MyHolder(view);
+        return new MedicineGuideAdapter.MyHolder(view, medClickListener);
     }
 
-    class MyHolder extends RecyclerView.ViewHolder  {
+    public interface OnMedInfoClickListener {
+        void onMedClick(int position);
+    }
+
+    public class MyHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView medName;
+        OnMedInfoClickListener medClickListener;
 
-        public MyHolder(@NonNull View itemView) {
+        public MyHolder(@NonNull View itemView, OnMedInfoClickListener listener) {
             super(itemView);
-            medName=itemView.findViewById(R.id.tv_medicine_info);
+            medName = itemView.findViewById(R.id.tv_medicine_info);
+            medClickListener = listener;
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            medClickListener.onMedClick(getAdapterPosition());
         }
     }
 }

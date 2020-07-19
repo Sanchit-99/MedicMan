@@ -2,25 +2,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.medicman">
 
-
     <application
-        android:requestLegacyExternalStorage="true"
         android:name=".Initialization"
         android:allowBackup="true"
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Setup" >
-
-        </activity>
+        <activity android:name=".MedicineDetailedInfo"></activity>
+        <activity android:name=".Setup"></activity>
         <activity android:name=".Add_medication" />
         <activity android:name=".History" />
         <activity android:name=".Medicine_info" />
-        <activity android:name=".Profile" >
-
-        </activity>
+        <activity android:name=".Profile"></activity>
         <activity android:name=".Home" />
         <activity android:name=".Signup" />
         <activity android:name=".Splash">
@@ -30,20 +26,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login"></activity>
+        <activity android:name=".Login" />
         <activity android:name=".MainActivity" />
-        <receiver android:name=".AlertReceiver"
+
+        <receiver
+            android:name=".AlertReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.media.action.DISPLAY_NOTIFICATION" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
     </application>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

@@ -6,15 +6,25 @@ public class MedicineInfo {
     String dosage;
     String time;
     String image_url;
+    int id;
 
     public MedicineInfo() {
     }
 
-    public MedicineInfo(String name, String dosage, String time, String image_url) {
+    public MedicineInfo(String name, String dosage, String time, String image_url,int id) {
         this.name = name;
         this.dosage = dosage;
         this.time = time;
         this.image_url=image_url;
+        this.id=id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getImage_url() {

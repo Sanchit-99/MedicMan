@@ -46,6 +46,7 @@ import java.util.Calendar;
 import java.util.Objects;
 
 import static com.example.medicman.Home.MedicinArray;
+import static com.example.medicman.Home.unique_id;
 import static com.example.medicman.Initialization.userInfoFromFirebase;
 
 public class Add_medication extends AppCompatActivity {
@@ -104,6 +105,7 @@ public class Add_medication extends AppCompatActivity {
         info.setTime("Time : "+time);
         info.setDosage("Dosage : "+dosage+" Pills");
         info.setImage_url(""+ downloadUri);
+        info.setId(unique_id);
         MedicinArray.add(info);
         FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("MedicineInfo").setValue(MedicinArray);
     }
@@ -134,6 +136,7 @@ public class Add_medication extends AppCompatActivity {
                         //set Notification
                         setNotification();
                         uploadDataToFirebase();
+                        updateID();
                         Toast.makeText(Add_medication.this, "Data saved successfully", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(Add_medication.this, "ERROR:" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -147,9 +150,13 @@ public class Add_medication extends AppCompatActivity {
 
     }
 
+    private void updateID() {
+        FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("UniqueIdGenerator").setValue(unique_id+1);
+    }
+
     private void setNotification() {
         String username=userInfoFromFirebase.userName;
-        int id = MedicinArray.size();
+        int id = unique_id;
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlertReceiver.class);
         intent.putExtra("medicine_name",medicineName.getText().toString());
@@ -170,10 +177,12 @@ public class Add_medication extends AppCompatActivity {
         } else {
             alarmManager.set(AlarmManager.RTC_WAKEUP, selected_time.getTimeInMillis(), pendingIntent);
         }
+
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
                 selected_time.getTimeInMillis(),
                 24*60*60*1000,
                 pendingIntent);
+
     }
 
     public void subtractDosage(View view) {
@@ -225,9 +234,8 @@ public class Add_medication extends AppCompatActivity {
                         RESULT_LOAD_IMAGE_CAMERA);
             } else {
                 ImagePicker.Companion.with(this)
-                        .cameraOnly()
                         .crop()
-                        .compress(1024)
+                        .compress(500)
                         .crop(16f, 9f)
                         .saveDir(new File(Environment.getExternalStorageDirectory(), "MedicMan"))
                         .start();

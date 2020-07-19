@@ -67,8 +67,6 @@ public class Profile extends AppCompatActivity {
 //        Glide.with(this).load(imageurl).into(profile_pic);
         Picasso.with(this)
                 .load(imageurl)
-                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
-                .networkPolicy(NetworkPolicy.NO_STORE)
                 .into(profile_pic);
     }
 
@@ -109,8 +107,8 @@ public class Profile extends AppCompatActivity {
     }
 
     public void update(View view) {
-        String new_username = username.getText().toString();
-        String new_number = number.getText().toString();
+        final  String new_username = username.getText().toString();
+        final String new_number = number.getText().toString();
 
         if (new_number.equals("") || new_username.equals("")) {
             Toast.makeText(this, "Fields Can't be empty", Toast.LENGTH_SHORT).show();
@@ -139,24 +137,28 @@ public class Profile extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
                         new_download_uri = task.getResult();
+                        userInfoFromFirebase.setUserName(new_username);
+                        userInfoFromFirebase.setProviderPhNo(new_number);
                         userInfoFromFirebase.setProfileUrl(new_download_uri.toString());
+                        FirebaseDatabase.getInstance().getReference().child("User").child(user.getUid()).child("UserInfo").setValue(userInfoFromFirebase);
+                        Toast.makeText(Profile.this, "Profile Updated Successfully", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(Profile.this, "ERROR:" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
+        }else {
+            userInfoFromFirebase.setUserName(new_username);
+            userInfoFromFirebase.setProviderPhNo(new_number);
+            FirebaseDatabase.getInstance().getReference().child("User").child(user.getUid()).child("UserInfo").setValue(userInfoFromFirebase);
+            Toast.makeText(Profile.this, "Profile Updated Successfully", Toast.LENGTH_SHORT).show();
         }
-        userInfoFromFirebase.setUserName(new_username);
-        userInfoFromFirebase.setProviderPhNo(new_number);
-        FirebaseDatabase.getInstance().getReference().child("User").child(user.getUid()).child("UserInfo").setValue(userInfoFromFirebase);
-        Toast.makeText(Profile.this, "Profile Updated Successfully", Toast.LENGTH_SHORT).show();
-
     }
 
     public void changePhoto(View view) {
         ImagePicker.Companion.with(this)
                 .crop()
-                .compress(500)
+                .compress(200)
                 .start();
     }
 

@@ -2,31 +2,41 @@ package com.example.medicman;
 
 
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.example.medicman.Home.MedicinArray;
+
 public class MedicineAdapter extends FirebaseRecyclerAdapter<MedicineInfo, MedicineAdapter.MyHolder> {
 
 
-    public MedicineAdapter(@NonNull FirebaseRecyclerOptions<MedicineInfo> options) {
+    Context context;
+    public MedicineAdapter(@NonNull FirebaseRecyclerOptions<MedicineInfo> options, Context context) {
         super(options);
+        this.context=context;
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull MyHolder holder, int position, @NonNull MedicineInfo model) {
+    protected void onBindViewHolder(@NonNull MyHolder holder, final int position, @NonNull final MedicineInfo model) {
         holder.name.setText(model.getName());
         holder.dose.setText(model.getDosage());
         holder.time.setText(model.getTime());
@@ -37,6 +47,17 @@ public class MedicineAdapter extends FirebaseRecyclerAdapter<MedicineInfo, Medic
                 //Implement alarm cancel
                 //delete from db
                 //delete from ui
+                AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                Intent intent = new Intent(context, AlertReceiver.class);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, model.id, intent, 0);
+                alarmManager.cancel(pendingIntent);
+                MedicinArray.remove(position);
+           //     Toast.makeText(context, ""+position, Toast.LENGTH_SHORT).show();
+                FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child("MedicineInfo").child(position+"").removeValue();
+                FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child("MedicineInfo").setValue(MedicinArray);
+
             }
         });
 

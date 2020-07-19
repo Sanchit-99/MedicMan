@@ -253,6 +253,7 @@ public class Setup extends AppCompatActivity {
         userInfo.setProviderPhNo(providerPhNo.getText().toString());
         userInfo.setDob(tvDOB.getText().toString());
         FirebaseDatabase.getInstance().getReference().child("User").child(firebaseUser.getUid()).child("UserInfo").setValue(userInfo);
+        FirebaseDatabase.getInstance().getReference().child("User").child(firebaseUser.getUid()).child("UniqueIdGenerator").setValue(1);
         userInfoFromFirebase=userInfo;
     }
 

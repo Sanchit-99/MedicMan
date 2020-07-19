@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,7 +32,9 @@ public class Home extends AppCompatActivity {
     RecyclerView recyclerView;
     MedicineAdapter adapter;
     FirebaseAuth mAuth;
+    FirebaseDatabase database;
     static ArrayList<MedicineInfo> MedicinArray;
+    static int unique_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,10 +59,10 @@ public class Home extends AppCompatActivity {
                             .setQuery(FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("MedicineInfo"), MedicineInfo.class)
                             .build();
 
-            adapter = new MedicineAdapter(options);
+            adapter = new MedicineAdapter(options,this);
             recyclerView.setAdapter(adapter);
 
-            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+            database = FirebaseDatabase.getInstance();
             DatabaseReference ref = database.getReference("User/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/MedicineInfo");
 
 // Attach a listener to read the data at our posts reference
@@ -73,6 +76,22 @@ public class Home extends AppCompatActivity {
                     }
                 }
 
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    System.out.println("The read failed: " + databaseError.getCode());
+                }
+            });
+
+            //fetching unique id
+            database = FirebaseDatabase.getInstance();
+            DatabaseReference ref_id = database.getReference("User/" + user.getUid() + "/UniqueIdGenerator");
+
+            ref_id.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    unique_id=dataSnapshot.getValue(Integer.class);
+                    Log.d("home","id updated "+unique_id);
+                }
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                     System.out.println("The read failed: " + databaseError.getCode());

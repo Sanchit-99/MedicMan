@@ -16,7 +16,9 @@
         <activity android:name=".Add_medication" />
         <activity android:name=".History" />
         <activity android:name=".Medicine_info" />
-        <activity android:name=".Profile"></activity>
+        <activity android:name=".Profile">
+
+        </activity>
         <activity android:name=".Home" />
         <activity android:name=".Signup" />
         <activity android:name=".Splash">

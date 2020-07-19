@@ -7,6 +7,17 @@
     android:background="@mipmap/setup_bg"
     tools:context=".Setup">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:visibility="invisible"
+        android:elevation="10dp"
+        android:id="@+id/loading_anim"
+        app:lottie_autoPlay="false"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="60dp"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loading_spinner"
+        android:layout_height="60dp"/>
 
     <LinearLayout
         android:layout_width="wrap_content"

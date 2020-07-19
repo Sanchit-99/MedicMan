@@ -19,12 +19,13 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import static com.example.medicman.Home.MedicinArray;
+//import static com.example.medicman.Home.MedicinArray;
 
 public class MedicineAdapter extends FirebaseRecyclerAdapter<MedicineInfo, MedicineAdapter.MyHolder> {
 
@@ -51,12 +52,18 @@ public class MedicineAdapter extends FirebaseRecyclerAdapter<MedicineInfo, Medic
                 Intent intent = new Intent(context, AlertReceiver.class);
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(context, model.id, intent, 0);
                 alarmManager.cancel(pendingIntent);
-                MedicinArray.remove(position);
-           //     Toast.makeText(context, ""+position, Toast.LENGTH_SHORT).show();
+                //MedicinArray.remove(position);
+           //    Toast.makeText(context, ""+position, Toast.LENGTH_SHORT).show();
+
+                //delete data
                 FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                        .child("MedicineInfo").child(position+"").removeValue();
-                FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                        .child("MedicineInfo").setValue(MedicinArray);
+                        .child("MedicineInfo").child(model.key).removeValue();
+
+                //delete image
+                FirebaseStorage.getInstance().getReference().child("Images").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child("medicine_"+model.key+".jpg").delete();
+//                FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+//                        .child("MedicineInfo").setValue(MedicinArray);
 
             }
         });

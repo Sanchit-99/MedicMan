@@ -29,13 +29,14 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import static com.example.medicman.Home.userInfoFromFirebase;
 
 import java.io.IOException;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.example.medicman.Initialization.userInfoFromFirebase;
+//import static com.example.medicman.Initialization.userInfoFromFirebase;
 
 public class Profile extends AppCompatActivity {
 

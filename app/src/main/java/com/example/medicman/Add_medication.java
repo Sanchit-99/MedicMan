@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.animation.Animator;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -30,11 +31,13 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -45,9 +48,9 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Objects;
 
-import static com.example.medicman.Home.MedicinArray;
+//import static com.example.medicman.Home.MedicinArray;
 import static com.example.medicman.Home.unique_id;
-import static com.example.medicman.Initialization.userInfoFromFirebase;
+import static com.example.medicman.Home.userInfoFromFirebase;
 
 public class Add_medication extends AppCompatActivity {
 
@@ -63,14 +66,20 @@ public class Add_medication extends AppCompatActivity {
     String time;
     Uri uri, downloadUri;
     Bitmap b;
+    DatabaseReference ref;
+    String key;
+    LottieAnimationView loading_anim,done_anim;
     private static final int RESULT_LOAD_IMAGE_CAMERA = 2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_medication);
+        loading_anim=findViewById(R.id.loading_anim);
+        done_anim=findViewById(R.id.done_anim);
         medicineName=findViewById(R.id.med_name);
         uri=null;
         downloadUri =null;
+        ref=FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("MedicineInfo");
         dosage=(float)0;
         dosage_txt=findViewById(R.id.dosage_txt);
         time_txt=findViewById(R.id.alarm_time_txt);
@@ -89,6 +98,7 @@ public class Add_medication extends AppCompatActivity {
     }
 
     public void addEntry(View view) {
+         key =ref.push().getKey();
         if(time==null || dosage==0.0 || medicineName.getText().toString().equals("") ){
             Toast.makeText(this, "Please fill all the details", Toast.LENGTH_SHORT).show();
             return;
@@ -106,16 +116,21 @@ public class Add_medication extends AppCompatActivity {
         info.setDosage("Dosage : "+dosage+" Pills");
         info.setImage_url(""+ downloadUri);
         info.setId(unique_id);
-        MedicinArray.add(info);
-        FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("MedicineInfo").setValue(MedicinArray);
+       // MedicinArray.add(info);
+
+        info.setKey(key);
+        ref.child(key).setValue(info);
     }
 
     private void uploadImageToFirebase() {
 
         if (uri!=null) {
 
+            loading_anim.setVisibility(View.VISIBLE);
+            loading_anim.playAnimation();
             storageRef = FirebaseStorage.getInstance().getReference();
-            final StorageReference storageReference = storageRef.child("Images/" + FirebaseAuth.getInstance().getCurrentUser().getUid() +"/medicine_" + MedicinArray.size() + ".jpg");
+            final StorageReference storageReference = storageRef
+                    .child("Images/" + FirebaseAuth.getInstance().getCurrentUser().getUid() +"/medicine_" + key + ".jpg");
             UploadTask uploadTask = storageReference.putFile(uri);
 
             Task<Uri> urlTask;
@@ -137,8 +152,37 @@ public class Add_medication extends AppCompatActivity {
                         setNotification();
                         uploadDataToFirebase();
                         updateID();
-                        Toast.makeText(Add_medication.this, "Data saved successfully", Toast.LENGTH_SHORT).show();
+                        loading_anim.cancelAnimation();
+                        loading_anim.setVisibility(View.GONE);
+                        done_anim.setVisibility(View.VISIBLE);
+                        done_anim.setSpeed((float)0.7);
+                        done_anim.playAnimation();
+                        done_anim.addAnimatorListener(new Animator.AnimatorListener() {
+                            @Override
+                            public void onAnimationStart(Animator animator) {
+
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animator animator) {
+                                done_anim.cancelAnimation();
+                                done_anim.setVisibility(View.GONE);
+                            }
+
+                            @Override
+                            public void onAnimationCancel(Animator animator) {
+
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animator animator) {
+
+                            }
+                        });
+                        Toast.makeText(Add_medication.this, "Medicine Sucessfully Added", Toast.LENGTH_SHORT).show();
                     } else {
+                        loading_anim.cancelAnimation();
+                        loading_anim.setVisibility(View.GONE);
                         Toast.makeText(Add_medication.this, "ERROR:" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
 //                btnSave.setVisibility(View.VISIBLE);
@@ -266,7 +310,7 @@ public class Add_medication extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
          if(resultCode == Activity.RESULT_OK){
                 uri=data.getData();
-                Toast.makeText(this, ""+uri, Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(this, ""+uri, Toast.LENGTH_SHORT).show();
              try {
                  b = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
              } catch (IOException e) {

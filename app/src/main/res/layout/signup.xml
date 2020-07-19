@@ -7,6 +7,17 @@
     android:background="@mipmap/login_signup_bg"
     tools:context="com.example.medicman.Signup">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:visibility="invisible"
+        android:elevation="10dp"
+        android:id="@+id/loading_anim"
+        app:lottie_autoPlay="false"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="60dp"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loading_spinner"
+        android:layout_height="60dp"/>
     <ImageView
         android:id="@+id/banner"
         android:layout_width="wrap_content"
@@ -19,7 +30,7 @@
         android:id="@+id/login_card"
         app:cardCornerRadius="10dp"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/banner"
         android:layout_marginLeft="23dp"
         android:layout_marginTop="20dp"
@@ -88,6 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <Button
+                android:layout_marginBottom="40dp"
                 android:id="@+id/btn_signup_signup"
                 android:layout_marginTop="20dp"
                 android:background="@mipmap/signup_btn"

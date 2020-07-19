@@ -24,6 +24,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -39,8 +40,9 @@ import java.util.Calendar;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import static com.example.medicman.Home.userInfoFromFirebase;
 
-import static com.example.medicman.Initialization.userInfoFromFirebase;
+//import static com.example.medicman.Initialization.userInfoFromFirebase;
 
 public class Setup extends AppCompatActivity {
     private static final int RESULT_LOAD_IMAGE = 1;
@@ -67,6 +69,7 @@ public class Setup extends AppCompatActivity {
     Uri imageUri;
     String selectedGender;
 
+    LottieAnimationView lottieAnimationView;
 
 
     @Override
@@ -92,6 +95,7 @@ public class Setup extends AppCompatActivity {
     }
 
     private void init() {
+        lottieAnimationView=findViewById(R.id.loading_anim);
         tvEmail = findViewById(R.id.tv_user_email);
         tvDOB = findViewById(R.id.tv_dob);
         etUserName = findViewById(R.id.et_userName_setup);
@@ -199,6 +203,17 @@ public class Setup extends AppCompatActivity {
     }
 
     public void saveDetailsToDB(View view) {
+        if (tvDOB.getText().toString().equals("")) {
+            Toast.makeText(this, "Choose date of birth", Toast.LENGTH_SHORT).show();
+            openDatePicker(ivProfile.getRootView());
+            return;
+        }
+        if (selectedGender.equals("")) {
+            Toast.makeText(this, "Select Your gender", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        lottieAnimationView.setVisibility(View.VISIBLE);
+        lottieAnimationView.playAnimation();
         if (etUserName.getText().toString().equals(""))
             etUserName.setText(DEFAULT_USER);
         if (providerPhNo.getText().toString().equals(""))
@@ -226,12 +241,16 @@ public class Setup extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         downloadUrl = task.getResult();
                         storeToDb();
+                        lottieAnimationView.cancelAnimation();
+                        lottieAnimationView.setVisibility(View.INVISIBLE);
                         Toast.makeText(Setup.this, "Data saved successfully", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), Home.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         finish();
                         startActivity(intent);
                     } else {
+                        lottieAnimationView.cancelAnimation();
+                        lottieAnimationView.setVisibility(View.INVISIBLE);
                         Toast.makeText(Setup.this, "ERROR:" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                     btnSave.setVisibility(View.VISIBLE);
@@ -277,7 +296,11 @@ public class Setup extends AppCompatActivity {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        lottieAnimationView.setVisibility(View.VISIBLE);
+                        lottieAnimationView.playAnimation();
                         storeToDb();
+                        lottieAnimationView.cancelAnimation();
+                        lottieAnimationView.setVisibility(View.INVISIBLE);
                         Intent intent = new Intent(getApplicationContext(), Home.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         finish();

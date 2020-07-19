@@ -18,7 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 public class Initialization extends Application {
 
     public static final String CHANNEL_1_ID = "channel1";
-    static UserInfo userInfoFromFirebase;
+//    static UserInfo userInfoFromFirebase;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -28,20 +28,20 @@ public class Initialization extends Application {
 
         if(user!=null){
 
-            Toast.makeText(this, "loggedin", Toast.LENGTH_SHORT).show();
-            final FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference ref = database.getReference("User/" + user.getUid() + "/UserInfo");
-
-            ref.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                        userInfoFromFirebase=dataSnapshot.getValue(UserInfo.class);
-                }
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    System.out.println("The read failed: " + databaseError.getCode());
-                }
-            });
+//            Toast.makeText(this, "loggedin", Toast.LENGTH_SHORT).show();
+//            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+//            DatabaseReference ref = database.getReference("User/" + user.getUid() + "/UserInfo");
+//
+//            ref.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                        userInfoFromFirebase=dataSnapshot.getValue(UserInfo.class);
+//                }
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//                    System.out.println("The read failed: " + databaseError.getCode());
+//                }
+//            });
         }else {
             Toast.makeText(this, "not", Toast.LENGTH_SHORT).show();
         }

@@ -38,4 +38,5 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:6.2.1'
     implementation 'com.github.dhaval2404:imagepicker:1.7.2'
     implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.airbnb.android:lottie:3.4.1'
 }

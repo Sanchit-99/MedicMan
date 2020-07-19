@@ -6,17 +6,27 @@ public class MedicineInfo {
     String dosage;
     String time;
     String image_url;
-    int id;
+    int id; //for notification
+    String key; //for recyclerview
 
     public MedicineInfo() {
     }
 
-    public MedicineInfo(String name, String dosage, String time, String image_url,int id) {
+    public MedicineInfo(String name, String dosage, String time, String image_url,int id, String key) {
         this.name = name;
         this.dosage = dosage;
         this.time = time;
         this.image_url=image_url;
         this.id=id;
+        this.key=key;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public int getId() {

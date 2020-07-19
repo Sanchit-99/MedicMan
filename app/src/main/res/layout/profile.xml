@@ -99,10 +99,10 @@
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
             android:elevation="3dp"
-            app:cardCornerRadius="15dp"
+            app:cardCornerRadius="20dp"
             app:cardBackgroundColor="@color/colorPrimary"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="45dp"
             android:onClick="update">
 
             <TextView
@@ -120,10 +120,10 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
             android:elevation="10dp"
-            app:cardCornerRadius="15dp"
-          android:layout_marginBottom="5dp"
+            app:cardCornerRadius="20dp"
+             android:layout_marginBottom="5dp"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="45dp"
             android:onClick="logout">
 
             <TextView

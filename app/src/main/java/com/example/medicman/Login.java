@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -21,7 +22,7 @@ public class Login extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private EditText etEmail;
     private EditText etPass;
-
+    LottieAnimationView lottieAnimationView;
     private Button btnLogin;
 
     @Override
@@ -36,29 +37,32 @@ public class Login extends AppCompatActivity {
         etEmail = findViewById(R.id.et_email_login);
         etPass = findViewById(R.id.et_pass_login);
         btnLogin = findViewById(R.id.btn_login_login);
+        lottieAnimationView=findViewById(R.id.loading_anim);
     }
 
     public void login(final View view) {
+
         String memail = etEmail.getText().toString().trim();
         String mpass = etPass.getText().toString();
 
         if (!memail.equals("") && !mpass.equals("")) {
-
-            btnLogin.setVisibility(view.INVISIBLE);
-
+            lottieAnimationView.setVisibility(View.VISIBLE);
+            lottieAnimationView.playAnimation();
             mAuth.signInWithEmailAndPassword(memail, mpass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
+                        lottieAnimationView.cancelAnimation();
                         Intent i = new Intent(getApplicationContext(), Home.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         finish();
                         startActivity(i);
                     } else {
+                        lottieAnimationView.cancelAnimation();
+                        lottieAnimationView.setVisibility(View.INVISIBLE);
                         String error = task.getException().getMessage();
                         Toast.makeText(Login.this, "Error: User not found" , Toast.LENGTH_SHORT).show();
                     }
-                    btnLogin.setVisibility(view.VISIBLE);
                 }
             });
         } else {

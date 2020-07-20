@@ -11,7 +11,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class MedicineUserGuideInfo implements Parcelable {
-    String medName;
+    String medSideEffects;
+    String medUsage;
     public static final Creator<MedicineUserGuideInfo> CREATOR = new Creator<MedicineUserGuideInfo>() {
         @Override
         public MedicineUserGuideInfo createFromParcel(Parcel in) {
@@ -23,30 +24,29 @@ public class MedicineUserGuideInfo implements Parcelable {
             return new MedicineUserGuideInfo[size];
         }
     };
-    String medSideEffects;
-    String medUsage;
+    String medName;
 
     public MedicineUserGuideInfo() {
     }
 
-    public MedicineUserGuideInfo(String medName, String medSideEffects, String medUsage) {
-        this.medName = medName;
+    String medPrecaution;
+
+    public MedicineUserGuideInfo(String medSideEffects, String medUsage, String medName, String medPrecaution) {
         this.medSideEffects = medSideEffects;
         this.medUsage = medUsage;
+        this.medName = medName;
+        this.medPrecaution = medPrecaution;
     }
 
     protected MedicineUserGuideInfo(Parcel in) {
-        medName = in.readString();
         medSideEffects = in.readString();
         medUsage = in.readString();
+        medName = in.readString();
+        medPrecaution = in.readString();
     }
 
-    public String getMedName() {
-        return medName;
-    }
-
-    public void setMedName(String medName) {
-        this.medName = medName;
+    public static Creator<MedicineUserGuideInfo> getCREATOR() {
+        return CREATOR;
     }
 
     public String getMedSideEffects() {
@@ -65,6 +65,22 @@ public class MedicineUserGuideInfo implements Parcelable {
         this.medUsage = medUsage;
     }
 
+    public String getMedName() {
+        return medName;
+    }
+
+    public void setMedName(String medName) {
+        this.medName = medName;
+    }
+
+    public String getMedPrecaution() {
+        return medPrecaution;
+    }
+
+    public void setMedPrecaution(String medPrecaution) {
+        this.medPrecaution = medPrecaution;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -72,8 +88,9 @@ public class MedicineUserGuideInfo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(medName);
         parcel.writeString(medSideEffects);
         parcel.writeString(medUsage);
+        parcel.writeString(medName);
+        parcel.writeString(medPrecaution);
     }
 }

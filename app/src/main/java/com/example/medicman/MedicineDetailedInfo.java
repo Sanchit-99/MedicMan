@@ -18,6 +18,7 @@ public class MedicineDetailedInfo extends AppCompatActivity {
         TextView tvMedTitle = findViewById(R.id.tv_med_title);
         TextView tvSideEffects = findViewById(R.id.tv_med_sideEffects);
         TextView tvUsage = findViewById(R.id.tv_med_usage);
+        TextView tvPrecaution = findViewById(R.id.tv_med_precaution);
 
         toolbar = findViewById(R.id.tlbr_medinfo);
         setSupportActionBar(toolbar);
@@ -32,6 +33,9 @@ public class MedicineDetailedInfo extends AppCompatActivity {
             tvMedTitle.setText(med.getMedName());
             tvSideEffects.setText(med.getMedSideEffects());
             tvUsage.setText(med.getMedSideEffects());
+            tvPrecaution.setText("(" + tvPrecaution.getText().toString()
+                    + ")\n"
+                    + med.getMedPrecaution());
         }
     }
 

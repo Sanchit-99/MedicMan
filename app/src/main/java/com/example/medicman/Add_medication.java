@@ -1,11 +1,5 @@
 package com.example.medicman;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.animation.Animator;
 import android.app.Activity;
@@ -31,6 +25,12 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+
 import com.airbnb.lottie.LottieAnimationView;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.Continuation;
@@ -48,9 +48,10 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Objects;
 
-//import static com.example.medicman.Home.MedicinArray;
 import static com.example.medicman.Home.unique_id;
 import static com.example.medicman.Home.userInfoFromFirebase;
+
+//import static com.example.medicman.Home.MedicinArray;
 
 public class Add_medication extends AppCompatActivity {
 
@@ -215,7 +216,7 @@ public class Add_medication extends AppCompatActivity {
         Toast.makeText(this, ""+selected_time.getTimeInMillis(), Toast.LENGTH_SHORT).show();
         if (Build.VERSION.SDK_INT >= 23) {
             alarmManager.setWindow(AlarmManager.RTC_WAKEUP,
-                    selected_time.getTimeInMillis(),selected_time.getTimeInMillis()+60000, pendingIntent);
+                    selected_time.getTimeInMillis(), selected_time.getTimeInMillis() + 2000, pendingIntent);
         } else if (Build.VERSION.SDK_INT >= 19) {
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, selected_time.getTimeInMillis(), pendingIntent);
         } else {

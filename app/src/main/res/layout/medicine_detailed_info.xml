@@ -7,55 +7,69 @@
     tools:context=".MedicineDetailedInfo">
 
 
-    <LinearLayout
-        android:id="@+id/r1"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tv_usage_heading"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_med_title"
-        android:layout_marginTop="10dp"
-        android:padding="10dp">
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="14dp"
+        android:text="Usage"
+        android:textColor="@color/colorPrimary"
+        android:textSize="10pt" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
-            android:text="Usage:"
-            android:textColor="@color/colorPrimary"
-            android:textSize="10pt" />
-
-        <TextView
-            android:id="@+id/tv_med_usage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:text="Content will be here"
-            android:textSize="10pt" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/r2"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tv_med_usage"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/r1"
-        android:layout_marginTop="10dp"
-        android:padding="10dp">
+        android:layout_below="@id/tv_usage_heading"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="6dp"
+        android:text="Usage will be here"
+        android:textSize="10pt" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
-            android:text="Side Effects:"
-            android:textColor="@color/colorPrimary"
-            android:textSize="10pt" />
+    <TextView
+        android:id="@+id/tv_se_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_med_usage"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="14dp"
+        android:text="Side Effects"
+        android:textColor="@color/colorPrimary"
+        android:textSize="10pt" />
 
-        <TextView
-            android:id="@+id/tv_med_sideEffects"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:text="Side Effects will be here"
-            android:textSize="10pt" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_med_sideEffects"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_se_heading"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="6dp"
+        android:text="Side Effects will be here"
+        android:textSize="10pt" />
+
+    <TextView
+        android:id="@+id/tv_precau_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_med_sideEffects"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="14dp"
+        android:text="Before taking this Medicine"
+        android:textColor="@color/colorPrimary"
+        android:textSize="10pt" />
+
+    <TextView
+        android:id="@+id/tv_med_precaution"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_precau_heading"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="6dp"
+        android:text="Ask to doctor if you have any"
+        android:textSize="10pt" />
+
 
     <TextView
         android:id="@+id/tv_med_title"

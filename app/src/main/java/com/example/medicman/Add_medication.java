@@ -62,7 +62,7 @@ public class Add_medication extends AppCompatActivity {
     Toolbar tb;
     EditText medicineName;
     float dosage;
-    int  mHour, mMinute;
+    int  mHour, mMinute,msec;
     String time;
     Uri uri, downloadUri;
     Bitmap b;
@@ -212,16 +212,15 @@ public class Add_medication extends AppCompatActivity {
         if (selected_time.before(Calendar.getInstance())) {
             selected_time.add(Calendar.DATE, 1);
         }
-
+        Toast.makeText(this, ""+selected_time.getTimeInMillis(), Toast.LENGTH_SHORT).show();
         if (Build.VERSION.SDK_INT >= 23) {
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,
-                    selected_time.getTimeInMillis(), pendingIntent);
+            alarmManager.setWindow(AlarmManager.RTC_WAKEUP,
+                    selected_time.getTimeInMillis(),selected_time.getTimeInMillis()+60000, pendingIntent);
         } else if (Build.VERSION.SDK_INT >= 19) {
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, selected_time.getTimeInMillis(), pendingIntent);
         } else {
             alarmManager.set(AlarmManager.RTC_WAKEUP, selected_time.getTimeInMillis(), pendingIntent);
         }
-
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
                 selected_time.getTimeInMillis(),
                 24*60*60*1000,
@@ -246,6 +245,7 @@ public class Add_medication extends AppCompatActivity {
         Calendar c = Calendar.getInstance();
         mHour = c.get(Calendar.HOUR_OF_DAY);
         mMinute = c.get(Calendar.MINUTE);
+    //    msec=c.get(Calendar.SECOND);
 
         // Launch Time Picker Dialog
         TimePickerDialog timePickerDialog = new TimePickerDialog(this,

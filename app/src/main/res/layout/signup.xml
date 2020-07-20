@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@mipmap/login_signup_bg"
+    android:onClick="hideKeyboard"
+    android:windowSoftInputMode="stateAlwaysHidden"
     tools:context="com.example.medicman.Signup">
 
     <com.airbnb.lottie.LottieAnimationView

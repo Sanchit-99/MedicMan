@@ -1,13 +1,14 @@
 package com.example.medicman;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -43,15 +44,19 @@ public class Signup extends AppCompatActivity {
         String p2 = etPass2.getText().toString();
         String regX = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^-]+(?:\\\\.[a-zA-Z0-9_!#$%&’*+/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:\\\\.[a-zA-Z0-9-]+)*$";
         //Pattern.compile(regX).matcher(email).matches()
-        if(!email.equals("")){
-            if(p1.equals(p2)){
+        if(!email.equals("")) {
+            if (p1.length() < 6) {
+                Toast.makeText(this, "Password must should have at least 6 character", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (p1.equals(p2)) {
                 lottieAnimationView.setVisibility(View.VISIBLE);
                 lottieAnimationView.playAnimation();
                 mAuth.createUserWithEmailAndPassword(email, p1)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(task.isSuccessful()){
+                                if (task.isSuccessful()) {
                                     lottieAnimationView.cancelAnimation();
                                     Intent i = new Intent(getApplicationContext(), Setup.class);
                                     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -74,9 +79,14 @@ public class Signup extends AppCompatActivity {
     }
 
     public void gotoLogin(View view) {
-        Intent i = new Intent(getApplicationContext(),Login.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent i = new Intent(getApplicationContext(), Login.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         finish();
         startActivity(i);
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

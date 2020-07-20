@@ -3,8 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-  android:background="@mipmap/profile_bg"
+    android:background="@mipmap/profile_bg"
     android:layout_height="match_parent"
+    android:onClick="hideKeyboard"
+    android:windowSoftInputMode="stateAlwaysHidden"
     tools:context="com.example.medicman.Profile">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -13,7 +15,8 @@
         android:layout_centerHorizontal="true"
         android:layout_width="140dp"
         android:layout_height="140dp"
-        android:src="@mipmap/setup_profile"/>
+        android:src="@mipmap/setup_profile" />
+
     <TextView
         android:onClick="changePhoto"
         android:textColor="@color/colorPrimary"

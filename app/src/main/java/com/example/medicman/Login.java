@@ -3,6 +3,7 @@ package com.example.medicman;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -97,5 +98,10 @@ public class Login extends AppCompatActivity {
 
     public void startSignup(View view) {
         startActivity(new Intent(getApplicationContext(), Signup.class));
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

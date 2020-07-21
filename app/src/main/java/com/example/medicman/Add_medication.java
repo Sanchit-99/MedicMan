@@ -25,6 +25,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.format.DateFormat;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -167,6 +168,11 @@ public class Add_medication extends AppCompatActivity {
                             public void onAnimationEnd(Animator animator) {
                                 done_anim.cancelAnimation();
                                 done_anim.setVisibility(View.GONE);
+
+                                Intent i = new Intent(getApplicationContext(), Home.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                finish();
+                                startActivity(i);
                             }
 
                             @Override
@@ -180,6 +186,7 @@ public class Add_medication extends AppCompatActivity {
                             }
                         });
                         Toast.makeText(Add_medication.this, "Medicine Sucessfully Added", Toast.LENGTH_SHORT).show();
+
                     } else {
                         loading_anim.cancelAnimation();
                         loading_anim.setVisibility(View.GONE);
@@ -212,7 +219,7 @@ public class Add_medication extends AppCompatActivity {
         if (selected_time.before(Calendar.getInstance())) {
             selected_time.add(Calendar.DATE, 1);
         }
-        Toast.makeText(this, ""+selected_time.getTimeInMillis(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, ""+selected_time.getTimeInMillis(), Toast.LENGTH_SHORT).show();
         if (Build.VERSION.SDK_INT >= 23) {
             alarmManager.setWindow(AlarmManager.RTC_WAKEUP,
                     selected_time.getTimeInMillis(),selected_time.getTimeInMillis()+2000, pendingIntent);
@@ -309,7 +316,7 @@ public class Add_medication extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
          if(resultCode == Activity.RESULT_OK){
-                uri=data.getData();
+             uri = data.getData();
              //   Toast.makeText(this, ""+uri, Toast.LENGTH_SHORT).show();
              try {
                  b = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
@@ -317,7 +324,11 @@ public class Add_medication extends AppCompatActivity {
                  e.printStackTrace();
              }
              imageView.setBackground(new BitmapDrawable(getResources(), b));
-        }
+         }
     }
 
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 }

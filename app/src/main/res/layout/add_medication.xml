@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:onClick="hideKeyboard"
+    android:windowSoftInputMode="stateAlwaysHidden"
     tools:context=".Add_medication">
+
     <com.airbnb.lottie.LottieAnimationView
         android:visibility="invisible"
         android:elevation="10dp"
@@ -16,6 +19,7 @@
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/loading_spinner"
         android:layout_height="60dp"/>
+
     <com.airbnb.lottie.LottieAnimationView
         android:visibility="invisible"
         android:elevation="10dp"
@@ -26,7 +30,8 @@
         android:layout_width="150dp"
         app:lottie_loop="false"
         app:lottie_rawRes="@raw/blue_check"
-        android:layout_height="150dp"/>
+        android:layout_height="150dp"
+        android:background="@color/colorSecondaryText" />
     <androidx.appcompat.widget.Toolbar
         app:theme="@style/ToolbarTheme"
         android:id="@+id/tlbr"

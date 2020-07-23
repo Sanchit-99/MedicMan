@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -17,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -49,6 +51,7 @@ public class Profile extends AppCompatActivity {
     String imageurl;
     Uri new_image_uri;
     Uri new_download_uri;
+    LottieAnimationView loading_anim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,18 +63,33 @@ public class Profile extends AppCompatActivity {
     }
 
     private void setdata() {
-        email.setText(userInfoFromFirebase.email);
-        dob.setText(userInfoFromFirebase.dob);
-        username.setText(userInfoFromFirebase.userName);
-        number.setText(userInfoFromFirebase.providerPhNo);
-        imageurl = userInfoFromFirebase.getProfileUrl();
-//        Glide.with(this).load(imageurl).into(profile_pic);
-        Picasso.with(this)
-                .load(imageurl)
-                .into(profile_pic);
+        loading_anim.setVisibility(View.VISIBLE);
+        loading_anim.playAnimation();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loading_anim.cancelAnimation();
+                loading_anim.setVisibility(View.GONE);
+                try {
+                    email.setText(userInfoFromFirebase.email);
+                    dob.setText(userInfoFromFirebase.dob);
+                    username.setText(userInfoFromFirebase.userName);
+                    number.setText(userInfoFromFirebase.providerPhNo);
+                    imageurl = userInfoFromFirebase.getProfileUrl();
+                    Picasso.with(Profile.this)
+                            .load(imageurl)
+                            .into(profile_pic);
+                }catch (Exception e){
+                    Toast.makeText(Profile.this, "Loading Error please try again", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, 3000);
+
+
     }
 
     private void init() {
+        loading_anim=findViewById(R.id.loading_anim);
         new_download_uri = null;
         new_image_uri = null;
         firebaseAuth = FirebaseAuth.getInstance();
@@ -115,7 +133,8 @@ public class Profile extends AppCompatActivity {
             Toast.makeText(this, "Fields Can't be empty", Toast.LENGTH_SHORT).show();
             return;
         }
-
+        loading_anim.setVisibility(View.VISIBLE);
+        loading_anim.playAnimation();
         if (new_image_uri != null) {
             //user changed image, upload to db
 
@@ -142,6 +161,8 @@ public class Profile extends AppCompatActivity {
                         userInfoFromFirebase.setProviderPhNo(new_number);
                         userInfoFromFirebase.setProfileUrl(new_download_uri.toString());
                         FirebaseDatabase.getInstance().getReference().child("User").child(user.getUid()).child("UserInfo").setValue(userInfoFromFirebase);
+                        loading_anim.cancelAnimation();
+                        loading_anim.setVisibility(View.GONE);
                         Toast.makeText(Profile.this, "Profile Updated Successfully", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(Profile.this, "ERROR:" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -152,6 +173,8 @@ public class Profile extends AppCompatActivity {
             userInfoFromFirebase.setUserName(new_username);
             userInfoFromFirebase.setProviderPhNo(new_number);
             FirebaseDatabase.getInstance().getReference().child("User").child(user.getUid()).child("UserInfo").setValue(userInfoFromFirebase);
+            loading_anim.cancelAnimation();
+            loading_anim.setVisibility(View.GONE);
             Toast.makeText(Profile.this, "Profile Updated Successfully", Toast.LENGTH_SHORT).show();
         }
     }

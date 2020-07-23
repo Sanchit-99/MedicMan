@@ -20,7 +20,7 @@ public class Initialization extends Application {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
-        if(user!=null){
+//        if(user!=null){
 
 //            Toast.makeText(this, "loggedin", Toast.LENGTH_SHORT).show();
 //            final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -36,9 +36,9 @@ public class Initialization extends Application {
 //                    System.out.println("The read failed: " + databaseError.getCode());
 //                }
 //            });
-        }else {
-            Toast.makeText(this, "not", Toast.LENGTH_SHORT).show();
-        }
+//        }else {
+//            Toast.makeText(this, "not", Toast.LENGTH_SHORT).show();
+//        }
 
         createNotificationChannels();
 

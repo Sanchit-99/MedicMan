@@ -9,6 +9,18 @@
     android:windowSoftInputMode="stateAlwaysHidden"
     tools:context="com.example.medicman.Profile">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:visibility="invisible"
+        android:elevation="10dp"
+        android:id="@+id/loading_anim"
+        app:lottie_autoPlay="false"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="60dp"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loading_spinner"
+        android:layout_height="60dp"/>
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_marginTop="20dp"
         android:id="@+id/profile_pic"
@@ -102,7 +114,7 @@
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
             android:elevation="3dp"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="25dp"
             app:cardBackgroundColor="@color/colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="45dp"
@@ -123,7 +135,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
             android:elevation="10dp"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="25dp"
              android:layout_marginBottom="5dp"
             android:layout_width="match_parent"
             android:layout_height="45dp"

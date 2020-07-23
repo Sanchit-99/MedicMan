@@ -20,7 +20,7 @@
             android:gravity="center"
             android:text="med"
             android:textColor="@android:color/black"
-            android:textSize="32dp"
+            android:textSize="20dp"
             android:textAlignment="center"/>
 
     </androidx.cardview.widget.CardView>

@@ -1,7 +1,13 @@
 package com.example.medicman;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -9,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,6 +45,7 @@ public class Home extends AppCompatActivity {
     static UserInfo userInfoFromFirebase;
     //static ArrayList<MedicineInfo> MedicinArray;
     static int unique_id;
+    Boolean InstalledNow;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +54,8 @@ public class Home extends AppCompatActivity {
         mAuth=FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
 
-
+        getpreference();
+        setPreference();
 
         if (user == null){
             Intent intent = new Intent(Home.this,Login.class);
@@ -87,6 +96,9 @@ public class Home extends AppCompatActivity {
 
                 }
             });
+
+
+            showAlert();
 
             bottomNavigationView = findViewById(R.id.bottom_navigation);
             bottomNavigationView.setSelectedItemId(R.id.home);
@@ -156,6 +168,11 @@ public class Home extends AppCompatActivity {
 //                            finish();
 //                            overridePendingTransition(0, 0);
 //                            break;
+                        case R.id.about:
+                            i = new Intent(getApplicationContext(), About.class);
+                            startActivity(i);
+                            overridePendingTransition(0, 0);
+                            break;
                         case R.id.mprofile:
                             i = new Intent(getApplicationContext(), Profile.class);
                             startActivity(i);
@@ -172,6 +189,41 @@ public class Home extends AppCompatActivity {
                     return false;
                 }
             });
+        }
+    }
+
+    private void getpreference() {
+        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        InstalledNow = sharedPreferences.getBoolean("InstalledNow",true);
+    }
+
+    private void setPreference() {
+        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        editor.putBoolean("InstalledNow",false);
+        editor.apply();
+    }
+
+    private void showAlert() {
+
+        if (InstalledNow) {
+            if (Build.VERSION.SDK_INT >= 23) {
+
+                final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                alert.setCancelable(false);
+                alert.setMessage("For proper functioning of medicine reminders, please" +
+                        " disable battery optimization for this app.")
+                        .setTitle("NOTE")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                Uri uri = Uri.fromParts("package", getPackageName(), null);
+                                intent.setData(uri);
+                                startActivity(intent);
+                            }
+                        }).show();
+            }
         }
     }
 

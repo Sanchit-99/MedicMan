@@ -4,4 +4,6 @@
     <string name="login"><u>LOGIN</u></string>
     <string name="fgpass"><u>Forgot Password?</u></string>
     <string name="tag_line">Never Forget Medicine</string>
+    <string name="emoji">Made With &#128150; In India</string>
+
 </resources>

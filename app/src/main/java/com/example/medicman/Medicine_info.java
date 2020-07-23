@@ -61,6 +61,11 @@ public class Medicine_info extends AppCompatActivity implements MedicineGuideAda
 //                        finish();
 //                        overridePendingTransition(0,0);
 //                        break;
+                    case R.id.about:
+                        i = new Intent(getApplicationContext(), About.class);
+                        startActivity(i);
+                        overridePendingTransition(0, 0);
+                        break;
                     case R.id.mprofile:
                         i =new Intent(getApplicationContext(),Profile.class);
                         startActivity(i);

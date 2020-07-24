@@ -11,11 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Contact"></activity>
+        <activity android:name=".MedicineImageViewer"></activity>
+        <activity android:name=".Contact" />
         <activity android:name=".FAQ" />
-        <activity android:name=".About">
-
-        </activity>
+        <activity android:name=".About"></activity>
         <activity android:name=".MedicineDetailedInfo" />
         <activity android:name=".Setup" />
         <activity android:name=".Add_medication" />
@@ -24,7 +23,7 @@
         <activity android:name=".Profile" />
         <activity android:name=".Home" />
         <activity android:name=".Signup" />
-        <activity android:name=".Splash" >
+        <activity android:name=".Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -46,9 +45,9 @@
             </intent-filter>
         </receiver>
     </application>
-    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
 
 </manifest>

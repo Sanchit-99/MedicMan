@@ -6,6 +6,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,17 @@ public class MedicineAdapter extends FirebaseRecyclerAdapter<MedicineInfo, Medic
         holder.name.setText(model.getName());
         holder.dose.setText(model.getDosage());
         holder.time.setText(model.getTime());
+
+
+        holder.open_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context,MedicineImageViewer.class);
+                i.putExtra("image_uri",model.uri);
+                i.putExtra("med_name",model.name);
+                context.startActivity(i);
+            }
+        });
 
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +94,7 @@ public class MedicineAdapter extends FirebaseRecyclerAdapter<MedicineInfo, Medic
     class MyHolder extends RecyclerView.ViewHolder  {
 
         TextView name,dose,time;
-        ImageView delete;
+        ImageView delete,open_image;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
@@ -90,6 +102,7 @@ public class MedicineAdapter extends FirebaseRecyclerAdapter<MedicineInfo, Medic
             dose=itemView.findViewById(R.id.medicine_dosage);
             time=itemView.findViewById(R.id.medicine_time);
             delete=itemView.findViewById(R.id.delete);
+            open_image=itemView.findViewById(R.id.open_pic);
 
 
         }

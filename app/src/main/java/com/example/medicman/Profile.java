@@ -83,7 +83,7 @@ public class Profile extends AppCompatActivity {
                     Toast.makeText(Profile.this, "Loading Error please try again", Toast.LENGTH_SHORT).show();
                 }
             }
-        }, 3000);
+        }, 2200);
 
 
     }

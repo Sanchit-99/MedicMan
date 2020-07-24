@@ -38,9 +38,10 @@
         android:layout_marginRight="23dp"
         android:layout_below="@id/banner"
         android:layout_width="match_parent"
-        android:layout_height="400dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
+            android:layout_marginBottom="15dp"
             android:gravity="center_horizontal"
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -87,6 +88,9 @@
                 android:layout_height="wrap_content"
                 android:onClick="login"/>
 
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="20dp"/>
             <TextView
                 android:id="@+id/tv_FGpass_login"
                 android:layout_width="wrap_content"

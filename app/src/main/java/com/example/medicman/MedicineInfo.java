@@ -2,6 +2,7 @@ package com.example.medicman;
 
 public class MedicineInfo {
 
+    String uri;
     String name;
     String dosage;
     String time;
@@ -12,17 +13,26 @@ public class MedicineInfo {
     public MedicineInfo() {
     }
 
-    public MedicineInfo(String name, String dosage, String time, String image_url,int id, String key) {
+    public MedicineInfo(String name, String dosage, String time, String image_url,int id, String key,String uri) {
         this.name = name;
         this.dosage = dosage;
         this.time = time;
         this.image_url=image_url;
         this.id=id;
         this.key=key;
+        this.uri=uri;
     }
 
     public String getKey() {
         return key;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 
     public void setKey(String key) {

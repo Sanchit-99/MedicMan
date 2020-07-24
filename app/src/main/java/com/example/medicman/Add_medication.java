@@ -113,10 +113,11 @@ public class Add_medication extends AppCompatActivity {
     private void uploadDataToFirebase() {
         MedicineInfo info = new MedicineInfo();
         info.setName(medicineName.getText().toString());
-        info.setTime("Time : "+time);
-        info.setDosage("Dosage : "+dosage+" Pills");
+        info.setTime(time);
+        info.setDosage(dosage+" Pills");
         info.setImage_url(""+ downloadUri);
         info.setId(unique_id);
+        info.setUri(uri.toString());
        // MedicinArray.add(info);
 
         info.setKey(key);

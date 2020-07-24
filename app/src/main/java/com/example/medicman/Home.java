@@ -54,8 +54,7 @@ public class Home extends AppCompatActivity {
         mAuth=FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
 
-        getpreference();
-        setPreference();
+
 
         if (user == null){
             Intent intent = new Intent(Home.this,Login.class);
@@ -65,6 +64,8 @@ public class Home extends AppCompatActivity {
             //MedicinArray = new ArrayList<>();
 
           //  Toast.makeText(this, "loggedin", Toast.LENGTH_SHORT).show();
+            getpreference();
+            setPreference();
              FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference ref = database.getReference("User/" + user.getUid() + "/UserInfo");
 
@@ -98,7 +99,7 @@ public class Home extends AppCompatActivity {
             });
 
 
-            showAlert();
+
 
             bottomNavigationView = findViewById(R.id.bottom_navigation);
             bottomNavigationView.setSelectedItemId(R.id.home);
@@ -195,6 +196,8 @@ public class Home extends AppCompatActivity {
     private void getpreference() {
         SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
         InstalledNow = sharedPreferences.getBoolean("InstalledNow",true);
+    //    Toast.makeText(this, ""+InstalledNow, Toast.LENGTH_SHORT).show();
+        showAlert();
     }
 
     private void setPreference() {

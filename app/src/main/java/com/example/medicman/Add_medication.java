@@ -104,10 +104,7 @@ public class Add_medication extends AppCompatActivity {
             Toast.makeText(this, "Please fill all the details", Toast.LENGTH_SHORT).show();
             return;
         }
-
         uploadImageToFirebase();
-
-
     }
 
     private void uploadDataToFirebase() {
@@ -199,7 +196,6 @@ public class Add_medication extends AppCompatActivity {
         }else {
             Toast.makeText(this, "Please upload image of MEDICINE", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     private void updateID() {
@@ -224,6 +220,9 @@ public class Add_medication extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 23) {
             alarmManager.setWindow(AlarmManager.RTC_WAKEUP,
                     selected_time.getTimeInMillis(),selected_time.getTimeInMillis()+2000, pendingIntent);
+//            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,
+//                    selected_time.getTimeInMillis(), pendingIntent);
+
         } else if (Build.VERSION.SDK_INT >= 19) {
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, selected_time.getTimeInMillis(), pendingIntent);
         } else {
@@ -312,7 +311,6 @@ public class Add_medication extends AppCompatActivity {
             break;
         }
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -327,7 +325,6 @@ public class Add_medication extends AppCompatActivity {
              imageView.setBackground(new BitmapDrawable(getResources(), b));
          }
     }
-
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);

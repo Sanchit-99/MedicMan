@@ -19,7 +19,7 @@ public class Splash extends AppCompatActivity {
     private Animation ivAnim;
     private Animation tvAnim;
 
-    private final int TIME_OUT = 3000;
+    private final int TIME_OUT = 2500; //Reduced the splash screen timeout from 3000 to 2500 milliseconds.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
